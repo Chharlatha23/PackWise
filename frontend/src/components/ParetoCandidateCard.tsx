@@ -3,9 +3,11 @@ import type { ParetoCandidate } from '../types/api';
 
 interface ParetoCandidateCardProps {
   candidate: ParetoCandidate;
+  onExplain?: (candidate: ParetoCandidate) => void;
+  onFeedback?: (candidateId: string, materialName: string) => void;
 }
 
-export const ParetoCandidateCard: React.FC<ParetoCandidateCardProps> = ({ candidate }) => {
+export const ParetoCandidateCard: React.FC<ParetoCandidateCardProps> = ({ candidate, onExplain, onFeedback }) => {
   const { candidate_design, objective_values, explanation_payload, constraint_compliance_summary } = candidate;
   
   const thicknessObj = objective_values['f_thickness'];
@@ -81,6 +83,25 @@ export const ParetoCandidateCard: React.FC<ParetoCandidateCardProps> = ({ candid
             )}
           </div>
         )}
+
+        <div className="pt-3 border-t border-slate-100 flex gap-2">
+          {onExplain && (
+            <button
+              onClick={() => onExplain(candidate)}
+              className="flex-1 py-1.5 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-lg border border-blue-200 transition-colors"
+            >
+              Constraint Audit
+            </button>
+          )}
+          {onFeedback && (
+            <button
+              onClick={() => onFeedback(candidate.pareto_candidate_id, candidate_design.material_name)}
+              className="py-1.5 px-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+            >
+              Trial Feedback
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

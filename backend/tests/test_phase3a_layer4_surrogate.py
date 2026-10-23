@@ -21,6 +21,7 @@ Verifies:
 17. Architectural Boundary Protection: Guarantees surrogate != feasibility gate, no M11 invocation, no residual learning, no Level C.
 """
 
+from typing import Optional, Dict, Any, List
 import pytest
 import numpy as np
 

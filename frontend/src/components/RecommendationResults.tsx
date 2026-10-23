@@ -4,9 +4,15 @@ import { ParetoCandidateCard } from './ParetoCandidateCard';
 
 interface RecommendationResultsProps {
   results: RecommendationResponse;
+  onExplainCandidate?: (candidate: any) => void;
+  onRecordFeedback?: (candidateId: string, materialName: string) => void;
 }
 
-export const RecommendationResults: React.FC<RecommendationResultsProps> = ({ results }) => {
+export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
+  results,
+  onExplainCandidate,
+  onRecordFeedback,
+}) => {
   const {
     total_candidates_evaluated,
     feasible_candidates_count,
@@ -220,6 +226,26 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({ re
                             );
                           })}
                         </div>
+
+                        {/* Action buttons */}
+                        <div className="mt-4 pt-3 border-t border-slate-200 flex gap-2">
+                          {onExplainCandidate && summary.explainability && (
+                            <button
+                              onClick={() => onExplainCandidate(summary.explainability)}
+                              className="flex-1 py-1.5 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-lg border border-blue-200 transition-colors"
+                            >
+                              Constraint Audit
+                            </button>
+                          )}
+                          {onRecordFeedback && (
+                            <button
+                              onClick={() => onRecordFeedback(summary.candidate_id, summary.material_name)}
+                              className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+                            >
+                              Trial Feedback
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   );
@@ -243,7 +269,24 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({ re
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pareto_front.candidates.map((cand) => (
-              <ParetoCandidateCard key={cand.pareto_candidate_id} candidate={cand} />
+              <ParetoCandidateCard
+                key={cand.pareto_candidate_id}
+                candidate={cand}
+                onExplain={(c) => {
+                  if (onExplainCandidate) {
+                    const candidateSummary = candidate_summaries?.find((cs: any) => cs.candidate_id === c.candidate_design?.candidate_id);
+                    onExplainCandidate(candidateSummary?.explainability || {
+                      candidate_id: c.pareto_candidate_id,
+                      material_name: c.candidate_design?.material_name,
+                      overall_feasibility_status: c.constraint_compliance_summary?.overall_feasibility_status || 'FEASIBLE',
+                      constraints: [],
+                      counterfactuals: [],
+                      trade_off_summary: c.explanation_payload?.trade_off_summary,
+                    });
+                  }
+                }}
+                onFeedback={onRecordFeedback}
+              />
             ))}
           </div>
         )}

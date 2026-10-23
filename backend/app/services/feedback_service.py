@@ -215,3 +215,15 @@ class FeedbackService:
             )
             for cand in records
         ]
+
+    def list_all_feedback(self, db: Session) -> List[FeedbackResponse]:
+        """
+        List all recorded feedback submissions with comparisons and update candidates.
+        """
+        records = db.query(PackagingFeedbackRecord).order_by(PackagingFeedbackRecord.created_at.desc()).all()
+        results = []
+        for r in records:
+            res = self.get_feedback_by_id(str(r.id), db)
+            if res:
+                results.append(res)
+        return results

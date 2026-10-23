@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -31,12 +31,13 @@ def health_check() -> dict:
 )
 def generate_recommendation(
     request: PackagingRequest,
+    search_engine: Optional[str] = None,
     db: Session = Depends(get_db)
 ) -> RecommendationResponse:
     """Generate end-to-end scientific recommendation for food packaging."""
     try:
         service = RecommendationService()
-        return service.generate_recommendation(request, db)
+        return service.generate_recommendation(request, db, search_engine_type=search_engine)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -67,6 +68,21 @@ def submit_feedback(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Feedback submission error: {str(e)}"
         )
+
+
+@router.get(
+    "/api/v1/feedback",
+    response_model=List[FeedbackResponse],
+    status_code=status.HTTP_200_OK,
+    summary="List all recorded packaging feedback submissions",
+    description="Returns all stored feedback trial submissions with comparisons and update candidates.",
+)
+def list_all_feedback(
+    db: Session = Depends(get_db)
+) -> List[FeedbackResponse]:
+    """Retrieve all feedback trial records."""
+    service = FeedbackService()
+    return service.list_all_feedback(db)
 
 
 @router.get(

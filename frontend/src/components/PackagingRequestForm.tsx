@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import type { PackagingRequest } from '../types/api';
 
 interface PackagingRequestFormProps {
-  onSubmit: (request: PackagingRequest) => void;
+  onSubmit: (request: PackagingRequest, searchEngine: string) => void;
   isLoading: boolean;
 }
 
 export const PackagingRequestForm: React.FC<PackagingRequestFormProps> = ({ onSubmit, isLoading }) => {
   const [formData, setFormData] = useState<Partial<PackagingRequest>>({});
+  const [searchEngine, setSearchEngine] = useState<string>('deterministic_exhaustive');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
@@ -23,9 +24,55 @@ export const PackagingRequestForm: React.FC<PackagingRequestFormProps> = ({ onSu
     }));
   };
 
+  const handleApplyPreset = (presetName: string) => {
+    if (presetName === 'strawberry') {
+      setFormData({
+        commodity: 'strawberry',
+        variety: 'Camarosa',
+        product_form: 'whole',
+        ripeness_stage: 'ripe',
+        target_shelf_life_days: 14,
+        storage_type: 'chilled',
+        storage_temperature_c: 2.0,
+        relative_humidity_percent: 92,
+        product_mass_kg: 0.25,
+        package_surface_area_m2: 0.045,
+        package_headspace_volume_cm3: 250,
+      });
+    } else if (presetName === 'apple') {
+      setFormData({
+        commodity: 'apple',
+        variety: 'Gala',
+        product_form: 'whole',
+        ripeness_stage: 'ripe',
+        target_shelf_life_days: 60,
+        storage_type: 'chilled',
+        storage_temperature_c: 1.0,
+        relative_humidity_percent: 90,
+        product_mass_kg: 1.0,
+        package_surface_area_m2: 0.12,
+        package_headspace_volume_cm3: 500,
+      });
+    } else if (presetName === 'salmon') {
+      setFormData({
+        commodity: 'salmon',
+        variety: 'Atlantic',
+        product_form: 'fillet',
+        ripeness_stage: 'fresh',
+        target_shelf_life_days: 10,
+        storage_type: 'chilled',
+        storage_temperature_c: 1.0,
+        relative_humidity_percent: 95,
+        product_mass_kg: 0.3,
+        package_surface_area_m2: 0.06,
+        package_headspace_volume_cm3: 200,
+      });
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData as PackagingRequest);
+    onSubmit(formData as PackagingRequest, searchEngine);
   };
 
   const getVarietySuggestions = () => {
@@ -33,6 +80,7 @@ export const PackagingRequestForm: React.FC<PackagingRequestFormProps> = ({ onSu
     if (commodity === 'apple') return ['Gala', 'Granny Smith'];
     if (commodity === 'durian') return ['Monthong'];
     if (commodity === 'salmon') return ['Atlantic'];
+    if (commodity === 'strawberry') return ['Camarosa', 'Chandler'];
     return [];
   };
 
@@ -40,11 +88,46 @@ export const PackagingRequestForm: React.FC<PackagingRequestFormProps> = ({ onSu
 
   return (
     <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-      <div className="bg-slate-800 px-6 py-4">
-        <h2 className="text-lg font-medium text-white">New Recommendation Request</h2>
+      <div className="bg-slate-800 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h2 className="text-lg font-medium text-white">Packaging Recommendation Request</h2>
+          <p className="text-xs text-slate-300 mt-0.5">Define food commodity context and inverse-design execution parameters.</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-300 font-medium">Quick Presets:</span>
+          <button type="button" onClick={() => handleApplyPreset('strawberry')} className="text-xs bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1 rounded border border-slate-600 transition-colors">Strawberry</button>
+          <button type="button" onClick={() => handleApplyPreset('apple')} className="text-xs bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1 rounded border border-slate-600 transition-colors">Apple</button>
+          <button type="button" onClick={() => handleApplyPreset('salmon')} className="text-xs bg-slate-700 hover:bg-slate-600 text-white px-2.5 py-1 rounded border border-slate-600 transition-colors">Salmon</button>
+        </div>
       </div>
       
-      <div className="p-6 space-y-10">
+      <div className="p-6 space-y-8">
+        {/* Search Engine Tier Selector */}
+        <section className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+            <div>
+              <label className="block text-sm font-semibold text-slate-800">Inverse-Design Search Stage</label>
+              <p className="text-xs text-slate-500 mt-0.5">Select the optimization tier according to the research protocol.</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <select
+                value={searchEngine}
+                onChange={(e) => setSearchEngine(e.target.value)}
+                className="px-3 py-1.5 text-xs font-semibold rounded-md border border-slate-300 bg-white text-slate-800 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="deterministic_exhaustive">M9 — Deterministic Baseline (Exhaustive)</option>
+                <option value="intelligent">M10 — Adaptive Heuristic Search</option>
+                <option value="ai_surrogate_prioritized">M11 — Surrogate-Assisted Search (Exact Physics Verified)</option>
+              </select>
+            </div>
+          </div>
+          <div className="mt-2 text-[11px] text-slate-600">
+            {searchEngine === 'deterministic_exhaustive' && 'Evaluates the complete candidate space deterministically without heuristic acceleration.'}
+            {searchEngine === 'intelligent' && 'Uses deterministic adaptive candidate prioritization. Zero learned ML.'}
+            {searchEngine === 'ai_surrogate_prioritized' && 'Surrogate models accelerate candidate shortlisting; all Pareto candidates are rigorously verified via exact physics.'}
+          </div>
+        </section>
+
         <section>
           <div className="mb-4 pb-2 border-b border-slate-100">
             <h3 className="text-base font-semibold text-slate-800">A. Commodity Profile</h3>
