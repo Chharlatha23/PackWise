@@ -10,7 +10,7 @@ import uuid
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
-from backend.app.models.feedback import (
+from app.models.feedback import (
     PackagingFeedbackRecord,
     ModelUpdateCandidate,
     ObservationOrigin,
@@ -18,7 +18,7 @@ from backend.app.models.feedback import (
     ComparisonStatus,
     ModelUpdateStatus
 )
-from backend.app.schemas.feedback import (
+from app.schemas.feedback import (
     FeedbackSubmission,
     PredictedOutputSchema,
     MeasurementComparison,

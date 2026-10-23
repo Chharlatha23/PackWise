@@ -1,4 +1,4 @@
-from backend.app.models.evidence import (
+from app.models.evidence import (
     Source,
     EvidenceRecord,
     ValidationResult,
@@ -15,7 +15,7 @@ from backend.app.models.evidence import (
     MicrobialGasInhibitionResponse,
     DataTransformation,
 )
-from backend.app.models.feedback import (
+from app.models.feedback import (
     PackagingFeedbackRecord,
     ModelUpdateCandidate,
     ObservationOrigin,

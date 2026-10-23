@@ -1,0 +1,63 @@
+{
+  "trial_id": "TRIAL-YYYY-MM-DD-001",
+  "protocol_id": "PROTOCOL-001",
+  "data_status": "REAL_EMPIRICAL",
+  "food_spec": {
+    "commodity": "",
+    "variety": null,
+    "product_form": "",
+    "initial_mass_kg": null,
+    "initial_moisture_g_g": null,
+    "initial_water_activity": null,
+    "critical_moisture_g_g": null,
+    "pH_value": null,
+    "respiration_rate_O2": null,
+    "respiration_rate_CO2": null,
+    "initial_microbial_load_log_cfu": null,
+    "processing_timestamp": null,
+    "food_batch_id": null
+  },
+  "packaging_spec": {
+    "material": "",
+    "layer_structure": null,
+    "nominal_thickness_um": null,
+    "measured_thickness_um": null,
+    "measured_otr": null,
+    "measured_wvtr": null,
+    "package_surface_area_m2": null,
+    "headspace_volume_m3": null,
+    "seal_integrity_pass": null,
+    "initial_O2_pct": null,
+    "initial_CO2_pct": null,
+    "film_batch_id": null
+  },
+  "storage_env": {
+    "target_temperature_c": null,
+    "target_relative_humidity_pct": null,
+    "temperature_trajectory": [],
+    "relative_humidity_trajectory": [],
+    "storage_duration_days": 0.0,
+    "thermal_cycling_notes": null,
+    "light_exposure_lux": null
+  },
+  "time_series_observations": [],
+  "outcome": {
+    "observed_shelf_life_days": 0.0,
+    "endpoint_type": "",
+    "endpoint_definition": "",
+    "endpoint_timestamp": null,
+    "endpoint_measurement_value": null,
+    "endpoint_measurement_unit": null
+  },
+  "provenance": {
+    "trial_id": "TRIAL-YYYY-MM-DD-001",
+    "protocol_id": "PROTOCOL-001",
+    "food_batch_id": null,
+    "film_batch_id": null,
+    "storage_chamber_id": null,
+    "instrument_ids": [],
+    "calibration_info": null,
+    "operator_or_lab_id": "",
+    "creation_timestamp": ""
+  }
+}

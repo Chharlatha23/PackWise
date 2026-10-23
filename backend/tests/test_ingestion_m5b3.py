@@ -1,10 +1,11 @@
 import os
 import json
 import tempfile
+from pathlib import Path
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from backend.app.models.evidence import (
+from app.models.evidence import (
     Base, EvidenceRecord, Source, RespirationObservation,
     MaterialBarrierObservation, PropertyType, GasSpecies,
     MicrobialGasInhibitionResponse, MicrobialGrowthKinetics,
@@ -12,9 +13,15 @@ from backend.app.models.evidence import (
     ValidationResult, DataTransformation, FoodObservation,
     EvidenceClassification, VerificationStatus
 )
-from backend.app.ingestion.pipeline import DataIngestionPipeline
+from app.ingestion.pipeline import DataIngestionPipeline
 
 TEST_DB_URL = "sqlite:///:memory:"
+
+# Resolve absolute data paths relative to this test file so that
+# DataIngestionPipeline.run() works correctly regardless of pytest CWD.
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+_BASE_DIR = str(_PROJECT_ROOT / "data" / "processed")
+_REFERENCE_DIR = str(_PROJECT_ROOT / "data" / "reference")
 
 @pytest.fixture(scope="module")
 def engine():
@@ -39,7 +46,7 @@ def db_session(engine):
 
 def test_ingestion_pipeline_47_records(db_session):
     """Test that all 9 datasets and 47 records are discovered and inserted."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     stats = pipeline.run()
 
     assert stats["datasets_processed"] == 9, "Expected exactly 9 datasets to be processed."
@@ -52,11 +59,11 @@ def test_ingestion_pipeline_47_records(db_session):
 
 def test_ingestion_idempotency(db_session):
     """Test that running ingestion twice produces 0 duplicate records."""
-    pipeline1 = DataIngestionPipeline(db_session)
+    pipeline1 = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     stats1 = pipeline1.run()
     counts1 = stats1["entity_counts"]
 
-    pipeline2 = DataIngestionPipeline(db_session)
+    pipeline2 = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     stats2 = pipeline2.run()
     counts2 = stats2["entity_counts"]
 
@@ -72,7 +79,7 @@ def test_ingestion_idempotency(db_session):
 
 def test_respiration_range_preservation(db_session):
     """Verify that respiration ranges retain both min and max boundaries."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     # Query respiration observations that are ranges
@@ -100,7 +107,7 @@ def test_respiration_range_preservation(db_session):
 
 def test_respiration_gas_species_separation(db_session):
     """Verify rO2 != rCO2 and gas_species is strictly explicit."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     o2_records = db_session.query(RespirationObservation).filter(
@@ -122,7 +129,7 @@ def test_respiration_gas_species_separation(db_session):
 
 def test_validation_result_ingestion(db_session):
     """Verify that ValidationResult records are ingested and linked to correct datasets."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     vrs = db_session.query(ValidationResult).all()
@@ -146,7 +153,7 @@ def test_validation_result_ingestion(db_session):
 
 def test_data_transformation_ingestion(db_session):
     """Verify that DataTransformation lineage from cleaning_log.json is ingested."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     dts = db_session.query(DataTransformation).all()
@@ -166,7 +173,7 @@ def test_data_transformation_ingestion(db_session):
 
 def test_combase_atmosphere_and_gas_inhibition(db_session):
     """Verify ComBase atmosphere_condition and gas inhibition parameters are preserved."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     # 1. Growth kinetics atmosphere_condition
@@ -187,7 +194,7 @@ def test_combase_atmosphere_and_gas_inhibition(db_session):
 
 def test_granular_literature_provenance(db_session):
     """Verify literature_references JSONB field is populated on EvidenceRecord."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     # Indian postharvest records have literature_references
@@ -213,7 +220,7 @@ def test_granular_literature_provenance(db_session):
 
 def test_polyid_measured_vs_predicted_separation(db_session):
     """Verify strict separation between experimental and QSAR predicted material observations."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     # Check EvidenceClassification
@@ -249,7 +256,7 @@ def test_polyid_measured_vs_predicted_separation(db_session):
 
 def test_material_barrier_properties_distinct(db_session):
     """Verify OTR, CO2TR, WVTR are distinct and thickness is preserved."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     otrs = db_session.query(MaterialBarrierObservation).filter_by(property_type=PropertyType.OTR).all()
@@ -268,7 +275,7 @@ def test_material_barrier_properties_distinct(db_session):
 
 def test_indian_postharvest_tolerances(db_session):
     """Verify Indian postharvest gas tolerances and PARTIALLY_VERIFIED status."""
-    pipeline = DataIngestionPipeline(db_session)
+    pipeline = DataIngestionPipeline(db_session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
 
     # Query tolerances with Indian EMAP limits
@@ -296,8 +303,8 @@ def test_malformed_input_behavior(db_session):
         with open(bad_file, "w") as f:
             f.write("not valid json at all")
 
-        # Run pipeline pointing to this temp dir
-        pipeline = DataIngestionPipeline(db_session, base_dir=tmp_dir)
+        # Run pipeline pointing to this temp dir (reference_dir is valid so report write succeeds)
+        pipeline = DataIngestionPipeline(db_session, base_dir=tmp_dir, reference_dir=_REFERENCE_DIR)
         try:
             stats = pipeline.run()
         except Exception:

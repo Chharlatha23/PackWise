@@ -1,25 +1,47 @@
-"""
-Tests for M8 End-to-End Recommendation Pipeline and API Endpoint.
-"""
-
 import pytest
 import httpx
-from sqlalchemy.orm import Session
+from pathlib import Path
+from sqlalchemy import create_engine as _create_engine
+from sqlalchemy.pool import StaticPool
+from sqlalchemy.orm import sessionmaker, Session
 
-from backend.app.main import app
-from backend.app.core.database import engine, Base, SessionLocal
-from backend.app.schemas.packaging_request import PackagingRequest
-from backend.app.services.recommendation_service import RecommendationService
-from backend.app.schemas.constraints import ConstraintStatus
+from app.main import app
+from app.core.database import Base, get_db
+from app.schemas.packaging_request import PackagingRequest
+from app.services.recommendation_service import RecommendationService
+from app.schemas.constraints import ConstraintStatus
+from app.ingestion.pipeline import DataIngestionPipeline
+
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+_BASE_DIR = str(_PROJECT_ROOT / "data" / "processed")
+_REFERENCE_DIR = str(_PROJECT_ROOT / "data" / "reference")
 
 
 @pytest.fixture(scope="module")
 def db_session():
-    Base.metadata.create_all(engine)
-    session = SessionLocal()
+    """Isolated in-memory SQLite session; no live PostgreSQL connection required."""
+    _eng = _create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    Base.metadata.create_all(_eng)
+    TestSession = sessionmaker(autocommit=False, autoflush=False, bind=_eng)
+    session = TestSession()
+    pipeline = DataIngestionPipeline(session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
+    pipeline.run()
     yield session
     session.close()
-    Base.metadata.drop_all(engine)
+    Base.metadata.drop_all(_eng)
+    _eng.dispose()
+
+
+@pytest.fixture(scope="module")
+def api_client(db_session):
+    """TestClient with get_db overridden to use the in-memory SQLite session."""
+    def _override_get_db():
+        yield db_session
+    app.dependency_overrides[get_db] = _override_get_db
+    from fastapi.testclient import TestClient
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.pop(get_db, None)
 
 
 def test_service_end_to_end_flow(db_session: Session):
@@ -107,8 +129,8 @@ def test_interval_values_remain_intervals(db_session: Session):
             assert hasattr(obj_val, "value_max")
 
 
-@pytest.mark.anyio
-async def test_api_recommendation_endpoint(db_session: Session):
+def test_api_recommendation_endpoint(api_client, db_session: Session):
+    """FastAPI POST /api/v1/recommend endpoint integration."""
     payload = {
         "commodity": "apple",
         "product_form": "fresh",
@@ -121,17 +143,12 @@ async def test_api_recommendation_endpoint(db_session: Session):
         "package_headspace_volume_cm3": 500.0,
         "product_mass_kg": 0.5
     }
+    response = api_client.post("/api/v1/recommend", json=payload)
+    assert response.status_code == 200
+    data = response.json()
 
-    async with httpx.AsyncClient(
-        transport=httpx.ASGITransport(app=app),
-        base_url="http://testserver"
-    ) as client:
-        response = await client.post("/api/v1/recommend", json=payload)
-        assert response.status_code == 200
-        data = response.json()
-
-        assert data["recommendation_run_id"].startswith("run-")
-        assert data["request"]["commodity"] == "apple"
-        assert "pareto_front" in data
-        assert "total_candidates_evaluated" in data
-        assert data["total_candidates_evaluated"] > 0
+    assert data["recommendation_run_id"].startswith("run-")
+    assert data["request"]["commodity"] == "apple"
+    assert "pareto_front" in data
+    assert "total_candidates_evaluated" in data
+    assert data["total_candidates_evaluated"] > 0

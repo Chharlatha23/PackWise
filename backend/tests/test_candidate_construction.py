@@ -1,22 +1,36 @@
 import pytest
+from pathlib import Path
 from sqlalchemy.orm import Session
 from uuid import UUID
 
-from backend.app.core.database import engine, Base, SessionLocal
-from backend.app.ingestion.pipeline import DataIngestionPipeline
-from backend.app.schemas.optimization import ConditionMatchLevel, EvidenceTier
-from backend.app.models.evidence import PackagingMaterial
+from app.core.database import engine, Base, SessionLocal
+from app.ingestion.pipeline import DataIngestionPipeline
+from app.schemas.optimization import ConditionMatchLevel, EvidenceTier
+from app.models.evidence import PackagingMaterial
 from scientific_engine.optimization.candidate_builder import CandidateBuilder
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+# Resolve absolute data paths relative to this test file so that
+# DataIngestionPipeline.run() works regardless of pytest's CWD.
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+_BASE_DIR = str(_PROJECT_ROOT / "data" / "processed")
+_REFERENCE_DIR = str(_PROJECT_ROOT / "data" / "reference")
+
 
 @pytest.fixture(scope="module")
 def db_session():
-    Base.metadata.create_all(engine)
-    session = SessionLocal()
-    pipeline = DataIngestionPipeline(session)
+    test_engine = create_engine("sqlite:///:memory:")
+    Base.metadata.create_all(test_engine)
+    TestSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+    session = TestSessionLocal()
+    pipeline = DataIngestionPipeline(session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
     pipeline.run()
     yield session
     session.close()
-    Base.metadata.drop_all(engine)
+    Base.metadata.drop_all(test_engine)
+    test_engine.dispose()
 
 @pytest.fixture(scope="module")
 def candidates(db_session: Session):

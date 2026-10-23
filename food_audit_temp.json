@@ -1,0 +1,4677 @@
+{
+  "almonds": {
+    "title": "Review of Green Food Processing techniques. Preservation, transformation, and extraction",
+    "doi": "https://doi.org/10.1016/j.ifset.2017.04.016",
+    "abstract": null
+  },
+  "cashews": {
+    "title": "Seed Science and Technology",
+    "doi": "https://doi.org/10.1007/978-981-19-5888-5",
+    "abstract": {
+      "This": [
+        0
+      ],
+      "open": [
+        1
+      ],
+      "access": [
+        2
+      ],
+      "edited": [
+        3
+      ],
+      "book": [
+        4
+      ],
+      "is": [
+        5
+      ],
+      "a": [
+        6
+      ],
+      "collection": [
+        7
+      ],
+      "of": [
+        8
+      ],
+      "21": [
+        9
+      ],
+      "chapters": [
+        10
+      ],
+      "synthesized": [
+        11
+      ],
+      "from": [
+        12
+      ],
+      "nearly": [
+        13
+      ],
+      "100": [
+        14
+      ],
+      "lectures": [
+        15
+      ],
+      "by": [
+        16
+      ],
+      ">70": [
+        17
+      ],
+      "eminent": [
+        18
+      ],
+      "international": [
+        19
+      ],
+      "and": [
+        20
+      ],
+      "Indian": [
+        21
+      ],
+      "experts.": [
+        22
+      ]
+    }
+  },
+  "walnuts": {
+    "title": "Internet-of-Things (IoT)-Based Smart Agriculture: Toward Making the Fields Talk",
+    "doi": "https://doi.org/10.1109/access.2019.2932609",
+    "abstract": {
+      "Despite": [
+        0
+      ],
+      "the": [
+        1,
+        7,
+        10,
+        28,
+        42,
+        54,
+        70,
+        82,
+        93,
+        138,
+        141,
+        154
+      ],
+      "perception": [
+        2
+      ],
+      "people": [
+        3
+      ],
+      "may": [
+        4
+      ],
+      "have": [
+        5
+      ],
+      "regarding": [
+        6
+      ],
+      "agricultural": [
+        8
+      ],
+      "process,": [
+        9
+      ],
+      "reality": [
+        11
+      ],
+      "is": [
+        12,
+        17,
+        151,
+        172
+      ],
+      "that": [
+        13
+      ],
+      "today's": [
+        14
+      ],
+      "agriculture": [
+        15,
+        56,
+        108,
+        120,
+        184,
+        205
+      ],
+      "industry": [
+        16,
+        36,
+        43
+      ],
+      "data-centered,": [
+        18
+      ],
+      "precise,": [
+        19
+      ],
+      "and": [
+        20,
+        58,
+        75,
+        99,
+        129,
+        149,
+        163,
+        180,
+        199,
+        206
+      ],
+      "smarter": [
+        21
+      ],
+      "than": [
+        22
+      ],
+      "ever.": [
+        23
+      ],
+      "The": [
+        24
+      ],
+      "rapid": [
+        25
+      ],
+      "emergence": [
+        26
+      ],
+      "of": [
+        27,
+        65,
+        72,
+        156,
+        202
+      ],
+      "Internet-of-Things": [
+        29
+      ],
+      "(IoT)": [
+        30
+      ],
+      "based": [
+        31,
+        191
+      ],
+      "technologies": [
+        32
+      ],
+      "redesigned": [
+        33
+      ],
+      "almost": [
+        34
+      ],
+      "every": [
+        35
+      ],
+      "including": [
+        37
+      ],
+      "\u201csmart": [
+        38
+      ],
+      "agriculture\u201d": [
+        39
+      ],
+      "which": [
+        40
+      ],
+      "moved": [
+        41
+      ],
+      "from": [
+        44,
+        144
+      ],
+      "statistical": [
+        45
+      ],
+      "to": [
+        46,
+        85
+      ],
+      "quantitative": [
+        47
+      ],
+      "approaches.": [
+        48
+      ],
+      "Such": [
+        49
+      ],
+      "revolutionary": [
+        50
+      ],
+      "changes": [
+        51
+      ],
+      "are": [
+        52,
+        110,
+        116,
+        132,
+        185
+      ],
+      "shaking": [
+        53
+      ],
+      "existing": [
+        55
+      ],
+      "methods": [
+        57
+      ],
+      "creating": [
+        59
+      ],
+      "new": [
+        60
+      ],
+      "opportunities": [
+        61
+      ],
+      "along": [
+        62
+      ],
+      "a": [
+        63
+      ],
+      "range": [
+        64
+      ],
+      "challenges.": [
+        66,
+        210
+      ],
+      "This": [
+        67
+      ],
+      "article": [
+        68
+      ],
+      "highlights": [
+        69
+      ],
+      "potential": [
+        71,
+        208
+      ],
+      "wireless": [
+        73,
+        104
+      ],
+      "sensors": [
+        74,
+        105,
+        115
+      ],
+      "IoT": [
+        76,
+        97,
+        203
+      ],
+      "in": [
+        77,
+        107,
+        112,
+        174,
+        183,
+        204
+      ],
+      "agriculture,": [
+        78
+      ],
+      "as": [
+        79,
+        81,
+        168
+      ],
+      "well": [
+        80
+      ],
+      "challenges": [
+        83
+      ],
+      "expected": [
+        84
+      ],
+      "be": [
+        86
+      ],
+      "faced": [
+        87
+      ],
+      "when": [
+        88
+      ],
+      "integrating": [
+        89
+      ],
+      "this": [
+        90,
+        135,
+        175,
+        193
+      ],
+      "technology": [
+        91,
+        136
+      ],
+      "with": [
+        92,
+        103
+      ],
+      "traditional": [
+        94
+      ],
+      "farming": [
+        95
+      ],
+      "practices.": [
+        96
+      ],
+      "devices": [
+        98
+      ],
+      "communication": [
+        100
+      ],
+      "techniques": [
+        101
+      ],
+      "associated": [
+        102
+      ],
+      "encountered": [
+        106
+      ],
+      "applications": [
+        109,
+        166
+      ],
+      "analyzed": [
+        111
+      ],
+      "detail.": [
+        113
+      ],
+      "What": [
+        114
+      ],
+      "available": [
+        117
+      ],
+      "for": [
+        118,
+        160
+      ],
+      "specific": [
+        119
+      ],
+      "application,": [
+        121
+      ],
+      "like": [
+        122
+      ],
+      "soil": [
+        123
+      ],
+      "preparation,": [
+        124
+      ],
+      "crop": [
+        125,
+        142,
+        161,
+        170
+      ],
+      "status,": [
+        126
+      ],
+      "irrigation,": [
+        127
+      ],
+      "insect": [
+        128
+      ],
+      "pest": [
+        130
+      ],
+      "detection": [
+        131
+      ],
+      "listed.": [
+        133
+      ],
+      "How": [
+        134
+      ],
+      "helping": [
+        137
+      ],
+      "growers": [
+        139
+      ],
+      "throughout": [
+        140
+      ],
+      "stages,": [
+        143
+      ],
+      "sowing": [
+        145
+      ],
+      "until": [
+        146
+      ],
+      "harvesting,": [
+        147
+      ],
+      "packing": [
+        148
+      ],
+      "transportation": [
+        150
+      ],
+      "explained.": [
+        152
+      ],
+      "Furthermore,": [
+        153
+      ],
+      "use": [
+        155
+      ],
+      "unmanned": [
+        157
+      ],
+      "aerial": [
+        158
+      ],
+      "vehicles": [
+        159
+      ],
+      "surveillance": [
+        162
+      ],
+      "other": [
+        164
+      ],
+      "favorable": [
+        165
+      ],
+      "such": [
+        167
+      ],
+      "optimizing": [
+        169
+      ],
+      "yield": [
+        171
+      ],
+      "considered": [
+        173
+      ],
+      "article.": [
+        176
+      ],
+      "State-of-the-art": [
+        177
+      ],
+      "IoT-based": [
+        178
+      ],
+      "architectures": [
+        179
+      ],
+      "platforms": [
+        181
+      ],
+      "used": [
+        182
+      ],
+      "also": [
+        186
+      ],
+      "highlighted": [
+        187
+      ],
+      "wherever": [
+        188
+      ],
+      "suitable.": [
+        189
+      ],
+      "Finally,": [
+        190
+      ],
+      "on": [
+        192
+      ],
+      "thorough": [
+        194
+      ],
+      "review,": [
+        195
+      ],
+      "we": [
+        196
+      ],
+      "identify": [
+        197
+      ],
+      "current": [
+        198
+      ],
+      "future": [
+        200
+      ],
+      "trends": [
+        201
+      ],
+      "highlight": [
+        207
+      ],
+      "research": [
+        209
+      ]
+    }
+  },
+  "peanuts": {
+    "title": "Current status of pesticide effects on environment, human health and it\u2019s eco-friendly management as bioremediation: A comprehensive review",
+    "doi": "https://doi.org/10.3389/fmicb.2022.962619",
+    "abstract": {
+      "Pesticides": [
+        0,
+        33
+      ],
+      "are": [
+        1,
+        9,
+        20
+      ],
+      "either": [
+        2
+      ],
+      "natural": [
+        3,
+        129
+      ],
+      "or": [
+        4
+      ],
+      "chemically": [
+        5
+      ],
+      "synthesized": [
+        6
+      ],
+      "compounds": [
+        7,
+        19
+      ],
+      "that": [
+        8
+      ],
+      "used": [
+        10,
+        21
+      ],
+      "to": [
+        11,
+        64,
+        82,
+        98,
+        119,
+        213
+      ],
+      "control": [
+        12
+      ],
+      "a": [
+        13,
+        23,
+        65,
+        73,
+        170,
+        215
+      ],
+      "variety": [
+        14,
+        24
+      ],
+      "of": [
+        15,
+        25,
+        56,
+        76,
+        115,
+        188,
+        200
+      ],
+      "pests.": [
+        16
+      ],
+      "These": [
+        17
+      ],
+      "chemical": [
+        18
+      ],
+      "in": [
+        22
+      ],
+      "sectors": [
+        26
+      ],
+      "like": [
+        27
+      ],
+      "food,": [
+        28
+      ],
+      "forestry,": [
+        29
+      ],
+      "agriculture": [
+        30
+      ],
+      "and": [
+        31,
+        86,
+        106,
+        122,
+        124,
+        132,
+        139,
+        142,
+        154,
+        156,
+        178,
+        190,
+        206
+      ],
+      "aquaculture.": [
+        32
+      ],
+      "shows": [
+        34,
+        197
+      ],
+      "their": [
+        35,
+        50,
+        77,
+        99,
+        120,
+        125
+      ],
+      "toxicity": [
+        36,
+        123
+      ],
+      "into": [
+        37
+      ],
+      "the": [
+        38,
+        54,
+        87,
+        193,
+        198
+      ],
+      "living": [
+        39
+      ],
+      "systems.": [
+        40
+      ],
+      "The": [
+        41,
+        59,
+        181
+      ],
+      "World": [
+        42
+      ],
+      "Health": [
+        43
+      ],
+      "Organization": [
+        44
+      ],
+      "(WHO)": [
+        45
+      ],
+      "categorizes": [
+        46
+      ],
+      "them": [
+        47,
+        70
+      ],
+      "based": [
+        48
+      ],
+      "on": [
+        49,
+        112,
+        128,
+        144
+      ],
+      "detrimental": [
+        51
+      ],
+      "effects,": [
+        52
+      ],
+      "emphasizing": [
+        53
+      ],
+      "relevance": [
+        55
+      ],
+      "public": [
+        57
+      ],
+      "health.": [
+        58
+      ],
+      "usage": [
+        60
+      ],
+      "can": [
+        61
+      ],
+      "be": [
+        62
+      ],
+      "minimized": [
+        63
+      ],
+      "least": [
+        66
+      ],
+      "level": [
+        67
+      ],
+      "by": [
+        68
+      ],
+      "using": [
+        69,
+        183
+      ],
+      "sparingly": [
+        71
+      ],
+      "with": [
+        72,
+        96
+      ],
+      "complete": [
+        74
+      ],
+      "grasp": [
+        75
+      ],
+      "categorization,": [
+        78
+      ],
+      "which": [
+        79
+      ],
+      "is": [
+        80
+      ],
+      "beneficial": [
+        81
+      ],
+      "both": [
+        83
+      ],
+      "human": [
+        84,
+        148
+      ],
+      "health": [
+        85,
+        149
+      ],
+      "environment.": [
+        88,
+        194,
+        217
+      ],
+      "In": [
+        89
+      ],
+      "this": [
+        90
+      ],
+      "review,": [
+        91
+      ],
+      "we": [
+        92
+      ],
+      "have": [
+        93,
+        161
+      ],
+      "discussed": [
+        94
+      ],
+      "pesticides": [
+        95,
+        168,
+        189
+      ],
+      "respect": [
+        97
+      ],
+      "global": [
+        100
+      ],
+      "scenarios,": [
+        101
+      ],
+      "such": [
+        102
+      ],
+      "as": [
+        103,
+        169
+      ],
+      "worldwide": [
+        104
+      ],
+      "distribution": [
+        105
+      ],
+      "environmental": [
+        107
+      ],
+      "impacts.": [
+        108
+      ],
+      "Major": [
+        109
+      ],
+      "literature": [
+        110
+      ],
+      "focused": [
+        111
+      ],
+      "potential": [
+        113
+      ],
+      "uses": [
+        114
+      ],
+      "pesticides,": [
+        116
+      ],
+      "classification": [
+        117
+      ],
+      "according": [
+        118
+      ],
+      "properties": [
+        121
+      ],
+      "adverse": [
+        126
+      ],
+      "effect": [
+        127
+      ],
+      "system": [
+        130
+      ],
+      "(soil": [
+        131
+      ],
+      "aquatic),": [
+        133
+      ],
+      "water,": [
+        134
+      ],
+      "plants": [
+        135,
+        145
+      ],
+      "(growth,": [
+        136
+      ],
+      "metabolism,": [
+        137
+      ],
+      "genotypic": [
+        138
+      ],
+      "phenotypic": [
+        140
+      ],
+      "changes": [
+        141
+      ],
+      "impact": [
+        143
+      ],
+      "defense": [
+        146
+      ],
+      "system),": [
+        147
+      ],
+      "(genetic": [
+        150
+      ],
+      "alteration,": [
+        151
+      ],
+      "cancer,": [
+        152
+      ],
+      "allergies,": [
+        153
+      ],
+      "asthma),": [
+        155
+      ],
+      "preserve": [
+        157
+      ],
+      "food": [
+        158
+      ],
+      "products.": [
+        159
+      ],
+      "We": [
+        160
+      ],
+      "also": [
+        162
+      ],
+      "described": [
+        163
+      ],
+      "eco-friendly": [
+        164
+      ],
+      "management": [
+        165,
+        212
+      ],
+      "strategies": [
+        166
+      ],
+      "for": [
+        167,
+        186,
+        209
+      ],
+      "green": [
+        171
+      ],
+      "solution,": [
+        172
+      ],
+      "including": [
+        173
+      ],
+      "bacterial": [
+        174
+      ],
+      "degradation,": [
+        175
+      ],
+      "myco-remediation,": [
+        176
+      ],
+      "phytoremediation,": [
+        177
+      ],
+      "microalgae-based": [
+        179
+      ],
+      "bioremediation.": [
+        180
+      ],
+      "microbes,": [
+        182,
+        203
+      ],
+      "catabolic": [
+        184
+      ],
+      "enzymes": [
+        185
+      ],
+      "degradation": [
+        187
+      ],
+      "clean-up": [
+        191
+      ],
+      "from": [
+        192
+      ],
+      "This": [
+        195
+      ],
+      "review": [
+        196
+      ],
+      "importance": [
+        199
+      ],
+      "finding": [
+        201
+      ],
+      "potent": [
+        202
+      ],
+      "novel": [
+        204
+      ],
+      "genes,": [
+        205
+      ],
+      "biotechnological": [
+        207
+      ],
+      "applications": [
+        208
+      ],
+      "pesticide": [
+        210
+      ],
+      "waste": [
+        211
+      ],
+      "create": [
+        214
+      ],
+      "sustainable": [
+        216
+      ]
+    }
+  },
+  "pistachios": {
+    "title": "Advances in Occurrence, Importance, and Mycotoxin Control Strategies: Prevention and Detoxification in Foods",
+    "doi": "https://doi.org/10.3390/foods9020137",
+    "abstract": {
+      "Mycotoxins": [
+        0
+      ],
+      "are": [
+        1,
+        30,
+        36,
+        63
+      ],
+      "toxic": [
+        2
+      ],
+      "substances": [
+        3
+      ],
+      "that": [
+        4,
+        29
+      ],
+      "can": [
+        5,
+        71
+      ],
+      "infect": [
+        6
+      ],
+      "many": [
+        7,
+        60,
+        102
+      ],
+      "foods": [
+        8,
+        118
+      ],
+      "with": [
+        9
+      ],
+      "carcinogenic,": [
+        10
+      ],
+      "genotoxic,": [
+        11
+      ],
+      "teratogenic,": [
+        12
+      ],
+      "nephrotoxic,": [
+        13
+      ],
+      "and": [
+        14,
+        49,
+        67,
+        79,
+        115
+      ],
+      "hepatotoxic": [
+        15
+      ],
+      "effects.": [
+        16
+      ],
+      "Mycotoxin": [
+        17
+      ],
+      "contamination": [
+        18,
+        57
+      ],
+      "of": [
+        19,
+        27,
+        31,
+        58,
+        69,
+        85,
+        98,
+        104,
+        113,
+        117
+      ],
+      "foodstuffs": [
+        20
+      ],
+      "causes": [
+        21
+      ],
+      "diseases": [
+        22
+      ],
+      "worldwide.": [
+        23
+      ],
+      "The": [
+        24
+      ],
+      "major": [
+        25
+      ],
+      "classes": [
+        26
+      ],
+      "mycotoxins": [
+        28,
+        70,
+        100,
+        120
+      ],
+      "the": [
+        32,
+        77,
+        83,
+        86,
+        92,
+        96,
+        111
+      ],
+      "greatest": [
+        33
+      ],
+      "agroeconomic": [
+        34
+      ],
+      "importance": [
+        35
+      ],
+      "aflatoxins,": [
+        37
+      ],
+      "ochratoxins,": [
+        38
+      ],
+      "fumonisins,": [
+        39
+      ],
+      "trichothecenes,": [
+        40
+      ],
+      "emerging": [
+        41
+      ],
+      "Fusarium": [
+        42
+      ],
+      "mycotoxins,": [
+        43
+      ],
+      "enniatins,": [
+        44
+      ],
+      "ergot": [
+        45
+      ],
+      "alkaloids,": [
+        46
+      ],
+      "Alternaria": [
+        47
+      ],
+      "toxins,": [
+        48
+      ],
+      "patulin.": [
+        50
+      ],
+      "Thus,": [
+        51
+      ],
+      "in": [
+        52,
+        73,
+        76,
+        101,
+        121
+      ],
+      "order": [
+        53,
+        122
+      ],
+      "to": [
+        54,
+        89,
+        123
+      ],
+      "mitigate": [
+        55
+      ],
+      "mycotoxin": [
+        56
+      ],
+      "foods,": [
+        59
+      ],
+      "control": [
+        61
+      ],
+      "approaches": [
+        62
+      ],
+      "used.": [
+        64
+      ],
+      "Prevention,": [
+        65
+      ],
+      "detoxification,": [
+        66
+      ],
+      "decontamination": [
+        68
+      ],
+      "contribute": [
+        72
+      ],
+      "this": [
+        74
+      ],
+      "purpose": [
+        75,
+        84
+      ],
+      "pre-harvest": [
+        78
+      ],
+      "post-harvest": [
+        80
+      ],
+      "stages.": [
+        81
+      ],
+      "Therefore,": [
+        82
+      ],
+      "review": [
+        87
+      ],
+      "is": [
+        88
+      ],
+      "elaborate": [
+        90
+      ],
+      "on": [
+        91
+      ],
+      "recent": [
+        93
+      ],
+      "advances": [
+        94
+      ],
+      "regarding": [
+        95
+      ],
+      "occurrence": [
+        97
+      ],
+      "main": [
+        99
+      ],
+      "types": [
+        103
+      ],
+      "important": [
+        105
+      ],
+      "agricultural": [
+        106
+      ],
+      "products,": [
+        107
+      ],
+      "as": [
+        108,
+        110
+      ],
+      "well": [
+        109
+      ],
+      "methods": [
+        112
+      ],
+      "inactivation": [
+        114
+      ],
+      "detoxification": [
+        116
+      ],
+      "from": [
+        119
+      ],
+      "reduce": [
+        124
+      ],
+      "or": [
+        125
+      ],
+      "fully": [
+        126
+      ],
+      "eliminate": [
+        127
+      ],
+      "them.": [
+        128
+      ]
+    }
+  },
+  "plain biscuits": {
+    "title": "Biscuits: A Substitution of Wheat Flour with Purple Rice Flour",
+    "doi": "https://doi.org/10.22606/afse.2018.23001",
+    "abstract": {
+      "Biscuits": [
+        0
+      ],
+      "are": [
+        1,
+        10
+      ],
+      "excellent": [
+        2
+      ],
+      "snacks": [
+        3
+      ],
+      "with": [
+        4,
+        53,
+        66,
+        143
+      ],
+      "a": [
+        5,
+        17,
+        50,
+        81,
+        94,
+        121
+      ],
+      "long": [
+        6
+      ],
+      "shelf": [
+        7,
+        133
+      ],
+      "life.However,": [
+        8
+      ],
+      "they": [
+        9
+      ],
+      "also": [
+        11,
+        113
+      ],
+      "high-energy": [
+        12
+      ],
+      "foods": [
+        13,
+        129
+      ],
+      "so": [
+        14
+      ],
+      "there": [
+        15
+      ],
+      "is": [
+        16,
+        49,
+        92,
+        112,
+        120
+      ],
+      "great": [
+        18
+      ],
+      "need": [
+        19
+      ],
+      "to": [
+        20,
+        37,
+        84,
+        105,
+        124,
+        130
+      ],
+      "improve": [
+        21
+      ],
+      "their": [
+        22,
+        39
+      ],
+      "nutrient": [
+        23
+      ],
+      "value.Many": [
+        24
+      ],
+      "substitutions": [
+        25
+      ],
+      "of": [
+        26,
+        63,
+        78,
+        99,
+        109,
+        135,
+        139
+      ],
+      "composite": [
+        27
+      ],
+      "flours": [
+        28
+      ],
+      "for": [
+        29,
+        117
+      ],
+      "wheat": [
+        30,
+        64,
+        141
+      ],
+      "flour": [
+        31,
+        48,
+        52,
+        65,
+        69,
+        142,
+        146
+      ],
+      "have": [
+        32
+      ],
+      "been": [
+        33
+      ],
+      "studied": [
+        34
+      ],
+      "in": [
+        35,
+        102,
+        128,
+        147
+      ],
+      "order": [
+        36
+      ],
+      "reduce": [
+        38
+      ],
+      "potential": [
+        40
+      ],
+      "negative": [
+        41
+      ],
+      "impact": [
+        42
+      ],
+      "on": [
+        43
+      ],
+      "human": [
+        44
+      ],
+      "health.Whole": [
+        45
+      ],
+      "purple": [
+        46,
+        67,
+        144
+      ],
+      "rice": [
+        47,
+        68,
+        145
+      ],
+      "novel": [
+        51
+      ],
+      "high": [
+        54,
+        122
+      ],
+      "antioxidant": [
+        55
+      ],
+      "contents": [
+        56
+      ],
+      "and": [
+        57,
+        75,
+        107
+      ],
+      "dietary": [
+        58
+      ],
+      "fiber.However,": [
+        59
+      ],
+      "the": [
+        60,
+        72,
+        132,
+        137
+      ],
+      "partial": [
+        61
+      ],
+      "replacement": [
+        62
+      ],
+      "can": [
+        70
+      ],
+      "affect": [
+        71
+      ],
+      "physicochemical": [
+        73
+      ],
+      "properties": [
+        74
+      ],
+      "consumer": [
+        76,
+        86
+      ],
+      "preferences": [
+        77
+      ],
+      "biscuits.Therefore,": [
+        79
+      ],
+      "producing": [
+        80
+      ],
+      "new": [
+        82
+      ],
+      "product": [
+        83
+      ],
+      "meet": [
+        85
+      ],
+      "demands": [
+        87
+      ],
+      "presents": [
+        88
+      ],
+      "many": [
+        89
+      ],
+      "challenges.Lipid": [
+        90
+      ],
+      "oxidation": [
+        91,
+        101
+      ],
+      "always": [
+        93
+      ],
+      "problem": [
+        95
+      ],
+      "during": [
+        96
+      ],
+      "extended": [
+        97
+      ],
+      "storage.Inhibition": [
+        98
+      ],
+      "lipid": [
+        100
+      ],
+      "biscuits": [
+        103
+      ],
+      "leading": [
+        104
+      ],
+      "rancidity": [
+        106
+      ],
+      "loss": [
+        108
+      ],
+      "nutritional": [
+        110
+      ],
+      "value": [
+        111
+      ],
+      "an": [
+        114
+      ],
+      "important": [
+        115
+      ],
+      "consideration": [
+        116
+      ],
+      "these": [
+        118
+      ],
+      "biscuits.There": [
+        119
+      ],
+      "demand": [
+        123
+      ],
+      "use": [
+        125
+      ],
+      "natural": [
+        126
+      ],
+      "antioxidants": [
+        127
+      ],
+      "enhance": [
+        131
+      ],
+      "life": [
+        134
+      ],
+      "biscuits.Hence": [
+        136
+      ],
+      "scope": [
+        138
+      ],
+      "replacing": [
+        140
+      ],
+      "biscuit": [
+        148
+      ],
+      "production": [
+        149
+      ],
+      "needs": [
+        150
+      ],
+      "further": [
+        151
+      ],
+      "study.": [
+        152
+      ]
+    }
+  },
+  "sweet biscuits": {
+    "title": "A review of multilayer and composite films and coatings for active biodegradable packaging",
+    "doi": "https://doi.org/10.1038/s41538-022-00132-8",
+    "abstract": {
+      "Active": [
+        0
+      ],
+      "biodegradable": [
+        1,
+        7,
+        42
+      ],
+      "packaging": [
+        2,
+        43,
+        62,
+        121,
+        166
+      ],
+      "are": [
+        3,
+        146
+      ],
+      "being": [
+        4
+      ],
+      "developed": [
+        5
+      ],
+      "from": [
+        6,
+        158
+      ],
+      "biopolymers": [
+        8
+      ],
+      "which": [
+        9,
+        161
+      ],
+      "may": [
+        10,
+        162
+      ],
+      "solve": [
+        11
+      ],
+      "the": [
+        12,
+        24,
+        71,
+        79,
+        85,
+        91,
+        99,
+        105,
+        112,
+        124,
+        130,
+        152
+      ],
+      "environmental": [
+        13
+      ],
+      "problems": [
+        14
+      ],
+      "caused": [
+        15
+      ],
+      "by": [
+        16,
+        47,
+        56,
+        77,
+        97
+      ],
+      "petroleum-based": [
+        17
+      ],
+      "materials": [
+        18,
+        167
+      ],
+      "(plastics),": [
+        19
+      ],
+      "as": [
+        20,
+        22
+      ],
+      "well": [
+        21
+      ],
+      "improving": [
+        23
+      ],
+      "shelf": [
+        25
+      ],
+      "life,": [
+        26
+      ],
+      "quality,": [
+        27
+      ],
+      "nutritional": [
+        28
+      ],
+      "profile,": [
+        29
+      ],
+      "and": [
+        30,
+        65,
+        82,
+        115,
+        119,
+        142,
+        150
+      ],
+      "safety": [
+        31
+      ],
+      "of": [
+        32,
+        38,
+        84,
+        101,
+        117,
+        126,
+        133,
+        155
+      ],
+      "packaged": [
+        33
+      ],
+      "food.": [
+        34
+      ],
+      "The": [
+        35
+      ],
+      "functional": [
+        36,
+        170
+      ],
+      "performance": [
+        37
+      ],
+      "active": [
+        39,
+        58,
+        102,
+        127,
+        156
+      ],
+      "ingredients": [
+        40,
+        59,
+        103,
+        157
+      ],
+      "in": [
+        41,
+        60
+      ],
+      "can": [
+        44,
+        53,
+        74,
+        94
+      ],
+      "be": [
+        45,
+        54,
+        75,
+        95
+      ],
+      "extended": [
+        46
+      ],
+      "controlling": [
+        48,
+        123
+      ],
+      "their": [
+        49
+      ],
+      "release": [
+        50,
+        72,
+        92,
+        125,
+        135,
+        154
+      ],
+      "profiles.": [
+        51
+      ],
+      "This": [
+        52,
+        109
+      ],
+      "achieved": [
+        55
+      ],
+      "incorporating": [
+        57
+      ],
+      "sandwich-structured": [
+        61
+      ],
+      "including": [
+        63,
+        139
+      ],
+      "multilayer": [
+        64,
+        69,
+        118
+      ],
+      "composite": [
+        66,
+        89,
+        120
+      ],
+      "packaging.": [
+        67
+      ],
+      "In": [
+        68,
+        88
+      ],
+      "materials,": [
+        70,
+        90
+      ],
+      "profile": [
+        73,
+        93
+      ],
+      "controlled": [
+        76,
+        134,
+        153
+      ],
+      "altering": [
+        78,
+        98
+      ],
+      "type,": [
+        80
+      ],
+      "structure,": [
+        81
+      ],
+      "thickness": [
+        83
+      ],
+      "different": [
+        86
+      ],
+      "layers.": [
+        87
+      ],
+      "manipulated": [
+        96
+      ],
+      "interactions": [
+        100
+      ],
+      "with": [
+        104,
+        168
+      ],
+      "surrounding": [
+        106
+      ],
+      "biopolymer": [
+        107
+      ],
+      "matrix.": [
+        108
+      ],
+      "article": [
+        110
+      ],
+      "reviews": [
+        111
+      ],
+      "preparation,": [
+        113
+      ],
+      "properties,": [
+        114
+      ],
+      "applications": [
+        116
+      ],
+      "for": [
+        122
+      ],
+      "ingredients.": [
+        128
+      ],
+      "Besides,": [
+        129
+      ],
+      "basic": [
+        131
+      ],
+      "theory": [
+        132
+      ],
+      "is": [
+        136
+      ],
+      "also": [
+        137
+      ],
+      "elaborated,": [
+        138
+      ],
+      "diffusion,": [
+        140
+      ],
+      "swelling,": [
+        141
+      ],
+      "biodegradation.": [
+        143
+      ],
+      "Mathematical": [
+        144
+      ],
+      "models": [
+        145
+      ],
+      "presented": [
+        147
+      ],
+      "to": [
+        148
+      ],
+      "describe": [
+        149
+      ],
+      "predict": [
+        151
+      ],
+      "thin": [
+        159
+      ],
+      "films,": [
+        160
+      ],
+      "help": [
+        163
+      ],
+      "researchers": [
+        164
+      ],
+      "design": [
+        165
+      ],
+      "improved": [
+        169
+      ],
+      "performance.": [
+        171
+      ]
+    }
+  },
+  "cream-filled biscuits": {
+    "title": "Technical constraints in the development of reduced-fat bakery products",
+    "doi": "https://doi.org/10.1079/pns2001108",
+    "abstract": {
+      "The": [
+        0,
+        101,
+        171
+      ],
+      "present": [
+        1
+      ],
+      "study": [
+        2
+      ],
+      "was": [
+        3,
+        92
+      ],
+      "funded": [
+        4
+      ],
+      "by": [
+        5
+      ],
+      "the": [
+        6,
+        18,
+        22,
+        46,
+        61,
+        72,
+        76,
+        96,
+        119,
+        185
+      ],
+      "Ministry": [
+        7
+      ],
+      "of": [
+        8,
+        24,
+        35,
+        58,
+        75,
+        99,
+        118,
+        137,
+        173,
+        199,
+        203,
+        218,
+        231
+      ],
+      "Agriculture,": [
+        9,
+        36
+      ],
+      "Fisheries": [
+        10,
+        37
+      ],
+      "and": [
+        11,
+        38,
+        50,
+        85,
+        110,
+        113,
+        134,
+        154,
+        169,
+        177,
+        201,
+        234
+      ],
+      "Food,": [
+        12,
+        39
+      ],
+      "its": [
+        13
+      ],
+      "aim": [
+        14
+      ],
+      "being": [
+        15
+      ],
+      "to": [
+        16,
+        21,
+        60,
+        94,
+        148,
+        151,
+        229,
+        238
+      ],
+      "identify": [
+        17
+      ],
+      "technical": [
+        19,
+        73,
+        84,
+        219
+      ],
+      "barriers": [
+        20
+      ],
+      "development": [
+        23,
+        87,
+        136
+      ],
+      "reduced-fat": [
+        25,
+        138,
+        226
+      ],
+      "alternatives": [
+        26
+      ],
+      "for": [
+        27,
+        166,
+        243
+      ],
+      "bakery": [
+        28,
+        139,
+        227
+      ],
+      "products.": [
+        29,
+        140,
+        245
+      ],
+      "Using": [
+        30
+      ],
+      "National": [
+        31
+      ],
+      "Food": [
+        32
+      ],
+      "Survey": [
+        33
+      ],
+      "(Ministry": [
+        34
+      ],
+      "1998)": [
+        40
+      ],
+      "statistics": [
+        41
+      ],
+      "on": [
+        42
+      ],
+      "dietary": [
+        43,
+        63
+      ],
+      "consumption": [
+        44
+      ],
+      "within": [
+        45
+      ],
+      "home,": [
+        47
+      ],
+      "biscuits,": [
+        48
+      ],
+      "cakes": [
+        49
+      ],
+      "pastries": [
+        51
+      ],
+      "were": [
+        52,
+        67,
+        80,
+        104,
+        131
+      ],
+      "identified": [
+        53
+      ],
+      "as": [
+        54
+      ],
+      "contributing": [
+        55
+      ],
+      "significant": [
+        56
+      ],
+      "amounts": [
+        57
+      ],
+      "fat": [
+        59,
+        144
+      ],
+      "population's": [
+        62
+      ],
+      "intake.": [
+        64
+      ],
+      "Face-to-face": [
+        65
+      ],
+      "interviews": [
+        66
+      ],
+      "conducted": [
+        68
+      ],
+      "with": [
+        69,
+        142
+      ],
+      "contacts": [
+        70
+      ],
+      "in": [
+        71,
+        83,
+        197,
+        221
+      ],
+      "community": [
+        74
+      ],
+      "baking": [
+        77
+      ],
+      "industry,": [
+        78
+      ],
+      "who": [
+        79
+      ],
+      "usually": [
+        81,
+        160
+      ],
+      "working": [
+        82
+      ],
+      "new-product": [
+        86
+      ],
+      "functions.": [
+        88
+      ],
+      "A": [
+        89
+      ],
+      "discussion": [
+        90
+      ],
+      "guide": [
+        91
+      ],
+      "developed": [
+        93
+      ],
+      "cover": [
+        95
+      ],
+      "main": [
+        97
+      ],
+      "lines": [
+        98
+      ],
+      "enquiry.": [
+        100
+      ],
+      "companies": [
+        102
+      ],
+      "selected": [
+        103
+      ],
+      "ingredient": [
+        105
+      ],
+      "suppliers": [
+        106
+      ],
+      "(eight),": [
+        107
+      ],
+      "manufacturers": [
+        108
+      ],
+      "(twelve)": [
+        109
+      ],
+      "retailers": [
+        111
+      ],
+      "(four)": [
+        112
+      ],
+      "so": [
+        114
+      ],
+      "represented": [
+        115
+      ],
+      "each": [
+        116
+      ],
+      "step": [
+        117
+      ],
+      "food": [
+        120
+      ],
+      "supply": [
+        121
+      ],
+      "chain.": [
+        122
+      ],
+      "In": [
+        123
+      ],
+      "brief,": [
+        124
+      ],
+      "results": [
+        125
+      ],
+      "showed": [
+        126
+      ],
+      "that": [
+        127,
+        193
+      ],
+      "current": [
+        128
+      ],
+      "labelling": [
+        129
+      ],
+      "rules": [
+        130
+      ],
+      "too": [
+        132
+      ],
+      "stringent,": [
+        133
+      ],
+      "constrained": [
+        135
+      ],
+      "Products": [
+        141
+      ],
+      "lower": [
+        143,
+        232
+      ],
+      "levels": [
+        145
+      ],
+      "are": [
+        146,
+        189,
+        235
+      ],
+      "harder": [
+        147
+      ],
+      "make": [
+        149
+      ],
+      "due": [
+        150
+      ],
+      "altered": [
+        152
+      ],
+      "handling": [
+        153
+      ],
+      "processing": [
+        155
+      ],
+      "properties.": [
+        156
+      ],
+      "Their": [
+        157
+      ],
+      "quality": [
+        158,
+        233
+      ],
+      "is": [
+        159,
+        175,
+        207,
+        214
+      ],
+      "poorer": [
+        161
+      ],
+      "than": [
+        162,
+        242
+      ],
+      "standard": [
+        163,
+        244
+      ],
+      "products,": [
+        164
+      ],
+      "particularly": [
+        165
+      ],
+      "flavour,": [
+        167
+      ],
+      "texture": [
+        168
+      ],
+      "mouthfeel.": [
+        170
+      ],
+      "perception": [
+        172
+      ],
+      "freshness": [
+        174
+      ],
+      "reduced": [
+        176
+      ],
+      "product": [
+        178,
+        186,
+        211
+      ],
+      "shelf-life": [
+        179
+      ],
+      "may": [
+        180
+      ],
+      "consequently": [
+        181
+      ],
+      "be": [
+        182,
+        195,
+        230
+      ],
+      "shorter.": [
+        183
+      ],
+      "For": [
+        184
+      ],
+      "developer,": [
+        187
+      ],
+      "there": [
+        188
+      ],
+      "relatively": [
+        190
+      ],
+      "few": [
+        191
+      ],
+      "ingredients": [
+        192
+      ],
+      "can": [
+        194
+      ],
+      "used": [
+        196
+      ],
+      "place": [
+        198
+      ],
+      "fat,": [
+        200
+      ],
+      "knowledge": [
+        202,
+        220
+      ],
+      "how": [
+        204
+      ],
+      "they": [
+        205
+      ],
+      "work": [
+        206
+      ],
+      "limited,": [
+        208
+      ],
+      "which": [
+        209
+      ],
+      "inhibits": [
+        210
+      ],
+      "development.": [
+        212
+      ],
+      "There": [
+        213
+      ],
+      "no": [
+        215
+      ],
+      "identifiable": [
+        216
+      ],
+      "source": [
+        217
+      ],
+      "this": [
+        222
+      ],
+      "field.": [
+        223
+      ],
+      "Consumers": [
+        224
+      ],
+      "perceive": [
+        225
+      ],
+      "products": [
+        228
+      ],
+      "generally": [
+        236
+      ],
+      "unwilling": [
+        237
+      ],
+      "pay": [
+        239
+      ],
+      "higher": [
+        240
+      ],
+      "prices": [
+        241
+      ]
+    }
+  },
+  "crackers": {
+    "title": "Functional food science and defence against reactive oxidative species",
+    "doi": "https://doi.org/10.1079/bjn19980106",
+    "abstract": {
+      "This": [
+        0,
+        114
+      ],
+      "paper": [
+        1
+      ],
+      "assesses": [
+        2
+      ],
+      "critically": [
+        3
+      ],
+      "the": [
+        4,
+        9,
+        20,
+        58,
+        69,
+        76,
+        86,
+        122,
+        170,
+        175,
+        178,
+        187,
+        291,
+        294,
+        333,
+        357,
+        365,
+        384,
+        401,
+        407,
+        418,
+        515,
+        539,
+        550,
+        560,
+        576
+      ],
+      "science": [
+        5,
+        71
+      ],
+      "base": [
+        6
+      ],
+      "that": [
+        7,
+        11,
+        26,
+        72,
+        94,
+        137,
+        142,
+        148,
+        293,
+        392
+      ],
+      "underpins": [
+        8
+      ],
+      "argument": [
+        10
+      ],
+      "oxidative": [
+        12,
+        214,
+        228,
+        272,
+        563
+      ],
+      "damage": [
+        13,
+        215,
+        229,
+        273,
+        564
+      ],
+      "is": [
+        14,
+        199,
+        330,
+        390,
+        427,
+        461,
+        534
+      ],
+      "a": [
+        15,
+        44,
+        117,
+        319,
+        450,
+        493
+      ],
+      "significant": [
+        16
+      ],
+      "causative": [
+        17
+      ],
+      "factor": [
+        18
+      ],
+      "in": [
+        19,
+        81,
+        90,
+        133,
+        140,
+        155,
+        159,
+        192,
+        216,
+        219,
+        230,
+        245,
+        315,
+        322,
+        517,
+        559,
+        565,
+        603
+      ],
+      "development": [
+        21,
+        125
+      ],
+      "of": [
+        22,
+        30,
+        46,
+        68,
+        75,
+        78,
+        88,
+        97,
+        110,
+        126,
+        161,
+        169,
+        174,
+        186,
+        213,
+        261,
+        271,
+        324,
+        335,
+        375,
+        381,
+        386,
+        395,
+        403,
+        406,
+        420,
+        422,
+        431,
+        458,
+        477,
+        498,
+        506,
+        542,
+        549,
+        562,
+        578,
+        585
+      ],
+      "human": [
+        23,
+        179,
+        217,
+        346,
+        350,
+        453,
+        540
+      ],
+      "diseases": [
+        24
+      ],
+      "and": [
+        25,
+        48,
+        85,
+        101,
+        124,
+        147,
+        172,
+        181,
+        233,
+        240,
+        267,
+        300,
+        303,
+        343,
+        368,
+        383,
+        437,
+        455,
+        544,
+        567,
+        591,
+        593,
+        598
+      ],
+      "antioxidants": [
+        27,
+        89,
+        138,
+        367,
+        580
+      ],
+      "are": [
+        28,
+        54,
+        150,
+        208,
+        247,
+        356,
+        361,
+        444,
+        582,
+        595,
+        605
+      ],
+      "capable": [
+        29
+      ],
+      "preventing": [
+        31,
+        91
+      ],
+      "or": [
+        32,
+        252,
+        307
+      ],
+      "ameliorating": [
+        33
+      ],
+      "these": [
+        34,
+        149,
+        162
+      ],
+      "disease": [
+        35,
+        128
+      ],
+      "processes.": [
+        36
+      ],
+      "The": [
+        37,
+        63,
+        157,
+        269,
+        553
+      ],
+      "assessment": [
+        38
+      ],
+      "has": [
+        39,
+        276,
+        449,
+        466,
+        556
+      ],
+      "been": [
+        40,
+        284,
+        467,
+        487
+      ],
+      "carried": [
+        41
+      ],
+      "out": [
+        42
+      ],
+      "under": [
+        43,
+        221
+      ],
+      "number": [
+        45,
+        380
+      ],
+      "headings,": [
+        47
+      ],
+      "some": [
+        49,
+        200,
+        277
+      ],
+      "recommendations": [
+        50
+      ],
+      "for": [
+        51,
+        121,
+        210,
+        575,
+        600
+      ],
+      "future": [
+        52
+      ],
+      "research": [
+        53,
+        329
+      ],
+      "made": [
+        55
+      ],
+      "based": [
+        56
+      ],
+      "on": [
+        57,
+        167,
+        182,
+        332,
+        345
+      ],
+      "present": [
+        59
+      ],
+      "day": [
+        60
+      ],
+      "knowledge": [
+        61,
+        64,
+        168
+      ],
+      "base.": [
+        62
+      ],
+      "database": [
+        65
+      ],
+      "(1)": [
+        66
+      ],
+      "Consideration": [
+        67
+      ],
+      "basic": [
+        70
+      ],
+      "underlies": [
+        73
+      ],
+      "understanding": [
+        74
+      ],
+      "role": [
+        77,
+        87,
+        321
+      ],
+      "free": [
+        79
+      ],
+      "radicals": [
+        80
+      ],
+      "causing": [
+        82
+      ],
+      "cellular": [
+        83
+      ],
+      "pathologies,": [
+        84
+      ],
+      "this,": [
+        92
+      ],
+      "shows": [
+        93
+      ],
+      "an": [
+        95,
+        313,
+        378,
+        456
+      ],
+      "imbalance": [
+        96,
+        115
+      ],
+      "reactive": [
+        98,
+        144
+      ],
+      "oxygen": [
+        99,
+        145
+      ],
+      "species": [
+        100,
+        146
+      ],
+      "antioxidant": [
+        102,
+        176,
+        188,
+        296,
+        314,
+        547
+      ],
+      "defence": [
+        103
+      ],
+      "systems": [
+        104,
+        141
+      ],
+      "may": [
+        105,
+        189,
+        306,
+        308,
+        317,
+        397
+      ],
+      "lead": [
+        106
+      ],
+      "to": [
+        107,
+        152,
+        194,
+        202,
+        227,
+        274,
+        364,
+        400,
+        417,
+        434,
+        441,
+        469,
+        489,
+        492,
+        522,
+        573
+      ],
+      "chemical": [
+        108
+      ],
+      "modifications": [
+        109
+      ],
+      "biologically": [
+        111
+      ],
+      "relevant": [
+        112,
+        151
+      ],
+      "macromolecules.": [
+        113
+      ],
+      "provides": [
+        116
+      ],
+      "logical": [
+        118
+      ],
+      "pathobiochemical": [
+        119
+      ],
+      "mechanism": [
+        120
+      ],
+      "initiation": [
+        123
+      ],
+      "several": [
+        127,
+        325
+      ],
+      "states.": [
+        129
+      ],
+      "Experimental": [
+        130
+      ],
+      "data": [
+        131
+      ],
+      "obtained": [
+        132
+      ],
+      "vivo": [
+        134,
+        160,
+        220
+      ],
+      "provide": [
+        135
+      ],
+      "evidence": [
+        136,
+        391
+      ],
+      "function": [
+        139
+      ],
+      "scavenge": [
+        143
+      ],
+      "what": [
+        153,
+        183
+      ],
+      "occurs": [
+        154
+      ],
+      "vivo.": [
+        156
+      ],
+      "relevance": [
+        158
+      ],
+      "observations": [
+        163
+      ],
+      "depends": [
+        164
+      ],
+      "inter": [
+        165
+      ],
+      "alia": [
+        166
+      ],
+      "uptake": [
+        171
+      ],
+      "distribution": [
+        173
+      ],
+      "within": [
+        177
+      ],
+      "body,": [
+        180
+      ],
+      "tissue": [
+        184
+      ],
+      "levels": [
+        185,
+        430
+      ],
+      "be": [
+        190,
+        310,
+        398,
+        470,
+        480,
+        528,
+        571
+      ],
+      "expected": [
+        191
+      ],
+      "relation": [
+        193
+      ],
+      "dietary": [
+        195
+      ],
+      "levels.": [
+        196
+      ],
+      "(2)": [
+        197
+      ],
+      "There": [
+        198,
+        389,
+        533
+      ],
+      "way": [
+        201
+      ],
+      "go": [
+        203
+      ],
+      "until": [
+        204
+      ],
+      "validated": [
+        205
+      ],
+      "precise": [
+        206
+      ],
+      "methods": [
+        207,
+        236,
+        281
+      ],
+      "available": [
+        209
+      ],
+      "measuring": [
+        211
+      ],
+      "biomarkers": [
+        212
+      ],
+      "subjects": [
+        218
+      ],
+      "minimally": [
+        222
+      ],
+      "invasive": [
+        223
+      ],
+      "conditions.": [
+        224
+      ],
+      "With": [
+        225,
+        415
+      ],
+      "respect": [
+        226,
+        416,
+        521
+      ],
+      "DNa,": [
+        231
+      ],
+      "HPLC": [
+        232,
+        258
+      ],
+      "GC-mass": [
+        234
+      ],
+      "spectrophotometry": [
+        235
+      ],
+      "have": [
+        237,
+        282,
+        486
+      ],
+      "both": [
+        238
+      ],
+      "merits": [
+        239
+      ],
+      "limitations.": [
+        241
+      ],
+      "Lipid": [
+        242
+      ],
+      "oxidation": [
+        243
+      ],
+      "products": [
+        244
+      ],
+      "plasma": [
+        246
+      ],
+      "best": [
+        248
+      ],
+      "measured": [
+        249
+      ],
+      "as": [
+        250,
+        253,
+        312,
+        340,
+        410,
+        588
+      ],
+      "isoprostanes": [
+        251
+      ],
+      "lipid": [
+        254
+      ],
+      "hydroperoxides": [
+        255
+      ],
+      "using": [
+        256,
+        353
+      ],
+      "specific": [
+        257
+      ],
+      "techniques.": [
+        259
+      ],
+      "Development": [
+        260
+      ],
+      "isoprostane": [
+        262
+      ],
+      "measurement": [
+        263,
+        270
+      ],
+      "will": [
+        264
+      ],
+      "advance": [
+        265
+      ],
+      "specificity": [
+        266
+      ],
+      "precision.": [
+        268
+      ],
+      "proteins": [
+        275
+      ],
+      "potential": [
+        278
+      ],
+      "but": [
+        279
+      ],
+      "such": [
+        280,
+        339,
+        409,
+        531,
+        587
+      ],
+      "not": [
+        283,
+        309,
+        370
+      ],
+      "effectively": [
+        285
+      ],
+      "exploited.": [
+        286
+      ],
+      "(3)": [
+        287
+      ],
+      "Epidemiological": [
+        288
+      ],
+      "studies": [
+        289,
+        352,
+        382
+      ],
+      "support": [
+        290
+      ],
+      "hypothesis": [
+        292
+      ],
+      "major": [
+        295,
+        366
+      ],
+      "nutrients": [
+        297
+      ],
+      "vitamin": [
+        298,
+        301,
+        425
+      ],
+      "E": [
+        299,
+        448,
+        592
+      ],
+      "C,": [
+        302
+      ],
+      "beta-carotene": [
+        304,
+        396,
+        478
+      ],
+      "(which": [
+        305
+      ],
+      "acting": [
+        311
+      ],
+      "vivo),": [
+        316
+      ],
+      "play": [
+        318
+      ],
+      "beneficial": [
+        320
+      ],
+      "prevention": [
+        323
+      ],
+      "chronic": [
+        326
+      ],
+      "disorders.": [
+        327
+      ],
+      "More": [
+        328
+      ],
+      "needed": [
+        331
+      ],
+      "impact": [
+        334
+      ],
+      "other": [
+        336,
+        341
+      ],
+      "non-nutrient": [
+        337,
+        546
+      ],
+      "compounds,": [
+        338
+      ],
+      "carotenoids": [
+        342
+      ],
+      "flavonoids,": [
+        344
+      ],
+      "health.": [
+        347
+      ],
+      "In": [
+        348
+      ],
+      "general,": [
+        349
+      ],
+      "intervention": [
+        351
+      ],
+      "hard": [
+        354
+      ],
+      "end-points": [
+        355
+      ],
+      "gold": [
+        358
+      ],
+      "standard.": [
+        359
+      ],
+      "Trials": [
+        360
+      ],
+      "restricted": [
+        362
+      ],
+      "mainly": [
+        363
+      ],
+      "do": [
+        369
+      ],
+      "allow": [
+        371
+      ],
+      "firm": [
+        372
+      ],
+      "conclusions": [
+        373
+      ],
+      "because": [
+        374,
+        484
+      ],
+      "inconsistent": [
+        376
+      ],
+      "findings,": [
+        377
+      ],
+      "insufficient": [
+        379
+      ],
+      "use": [
+        385
+      ],
+      "varying": [
+        387
+      ],
+      "doses.": [
+        388
+      ],
+      "large": [
+        393
+      ],
+      "doses": [
+        394,
+        526
+      ],
+      "deleterious": [
+        399
+      ],
+      "health": [
+        402
+      ],
+      "certain": [
+        404
+      ],
+      "subgroups": [
+        405
+      ],
+      "population": [
+        408,
+        494
+      ],
+      "heavy": [
+        411,
+        518
+      ],
+      "habitual": [
+        412
+      ],
+      "smokers.": [
+        413
+      ],
+      "(4)": [
+        414
+      ],
+      "safety": [
+        419
+      ],
+      "administration": [
+        421
+      ],
+      "supplementary": [
+        423
+      ],
+      "vitamins,": [
+        424
+      ],
+      "C": [
+        426,
+        590
+      ],
+      "safe": [
+        428
+      ],
+      "at": [
+        429,
+        495
+      ],
+      "supplementation": [
+        432
+      ],
+      "up": [
+        433,
+        440
+      ],
+      "600": [
+        435
+      ],
+      "mg/d,": [
+        436,
+        443
+      ],
+      "higher": [
+        438
+      ],
+      "levels,": [
+        439
+      ],
+      "2000": [
+        442
+      ],
+      "without": [
+        445,
+        462,
+        471
+      ],
+      "risk.": [
+        446,
+        474
+      ],
+      "Vitamin": [
+        447
+      ],
+      "very": [
+        451
+      ],
+      "low": [
+        452
+      ],
+      "toxicity": [
+        454
+      ],
+      "intake": [
+        457
+      ],
+      "1000": [
+        459
+      ],
+      "mg/d": [
+        460,
+        465
+      ],
+      "risk;": [
+        463
+      ],
+      "3200": [
+        464
+      ],
+      "shown": [
+        468,
+        488
+      ],
+      "any": [
+        472
+      ],
+      "consistent": [
+        473
+      ],
+      "Large": [
+        475
+      ],
+      "intakes": [
+        476
+      ],
+      "must": [
+        479
+      ],
+      "viewed": [
+        481
+      ],
+      "with": [
+        482,
+        520
+      ],
+      "caution": [
+        483
+      ],
+      "they": [
+        485
+      ],
+      "confer": [
+        490
+      ],
+      "detriment": [
+        491
+      ],
+      "high": [
+        496,
+        507
+      ],
+      "risk": [
+        497,
+        508
+      ],
+      "lung": [
+        499
+      ],
+      "cancer": [
+        500
+      ],
+      "when": [
+        501
+      ],
+      "administered": [
+        502
+      ],
+      "after": [
+        503
+      ],
+      "many": [
+        504
+      ],
+      "years": [
+        505
+      ],
+      "(smoking)": [
+        509
+      ],
+      "behaviour.": [
+        510
+      ],
+      "Until": [
+        511
+      ],
+      "further": [
+        512
+      ],
+      "work": [
+        513
+      ],
+      "clarifies": [
+        514
+      ],
+      "situation": [
+        516
+      ],
+      "smokers": [
+        519
+      ],
+      "taking": [
+        523
+      ],
+      "supplements,": [
+        524
+      ],
+      "larger": [
+        525
+      ],
+      "should": [
+        527
+      ],
+      "avoided": [
+        529
+      ],
+      "by": [
+        530,
+        608
+      ],
+      "individuals.": [
+        532
+      ],
+      "little": [
+        535
+      ],
+      "reliable": [
+        536
+      ],
+      "information": [
+        537
+      ],
+      "about": [
+        538
+      ],
+      "toxicology": [
+        541
+      ],
+      "flavonoids": [
+        543
+      ],
+      "related": [
+        545
+      ],
+      "constituents": [
+        548
+      ],
+      "diet.": [
+        551
+      ],
+      "(5)": [
+        552
+      ],
+      "food": [
+        554,
+        579,
+        609
+      ],
+      "industry": [
+        555
+      ],
+      "long": [
+        557
+      ],
+      "experience": [
+        558,
+        569
+      ],
+      "control": [
+        561
+      ],
+      "foods": [
+        566,
+        604
+      ],
+      "this": [
+        568
+      ],
+      "can": [
+        570
+      ],
+      "used": [
+        572
+      ],
+      "advantage": [
+        574
+      ],
+      "protection": [
+        577,
+        602
+      ],
+      "which": [
+        581
+      ],
+      "beneficial.": [
+        583
+      ],
+      "Some": [
+        584
+      ],
+      "these,": [
+        586
+      ],
+      "vitamins": [
+        589
+      ],
+      "beta-carotene,": [
+        594
+      ],
+      "well": [
+        596
+      ],
+      "known,": [
+        597
+      ],
+      "strategies": [
+        599
+      ],
+      "their": [
+        601
+      ],
+      "already": [
+        606
+      ],
+      "exploited": [
+        607
+      ],
+      "technologies.": [
+        610
+      ],
+      "(ABSTRACT": [
+        611
+      ],
+      "TRUNCATED)": [
+        612
+      ]
+    }
+  },
+  "bread": {
+    "title": "Indian Journal Of Science And Technology",
+    "doi": "https://doi.org/10.17485/ijst",
+    "abstract": {
+      "Indian": [
+        0
+      ],
+      "Journal": [
+        1
+      ],
+      "of": [
+        2,
+        25
+      ],
+      "Science": [
+        3
+      ],
+      "and": [
+        4,
+        14,
+        27
+      ],
+      "Technology": [
+        5
+      ],
+      "is": [
+        6
+      ],
+      "an": [
+        7
+      ],
+      "open-access": [
+        8
+      ],
+      "journal": [
+        9
+      ],
+      "publishing": [
+        10
+      ],
+      "full-length": [
+        11
+      ],
+      "research": [
+        12
+      ],
+      "papers": [
+        13
+      ],
+      "review": [
+        15
+      ],
+      "articles": [
+        16
+      ],
+      "covering": [
+        17
+      ],
+      "subjects": [
+        18
+      ],
+      "that": [
+        19
+      ],
+      "fall": [
+        20
+      ],
+      "under": [
+        21
+      ],
+      "the": [
+        22
+      ],
+      "wide": [
+        23
+      ],
+      "spectrum": [
+        24
+      ],
+      "science": [
+        26
+      ],
+      "technology.": [
+        28
+      ]
+    }
+  },
+  "buns": {
+    "title": "Active Packaging Applications for Food",
+    "doi": "https://doi.org/10.1111/1541-4337.12322",
+    "abstract": {
+      "The": [
+        0
+      ],
+      "traditional": [
+        1
+      ],
+      "role": [
+        2
+      ],
+      "of": [
+        3,
+        53,
+        114,
+        127,
+        143,
+        163,
+        191,
+        215,
+        232,
+        235
+      ],
+      "food": [
+        4,
+        90,
+        138,
+        147,
+        196,
+        209,
+        224
+      ],
+      "packaging": [
+        5,
+        46,
+        55,
+        60,
+        98,
+        139,
+        226
+      ],
+      "is": [
+        6,
+        123,
+        181
+      ],
+      "continuing": [
+        7
+      ],
+      "to": [
+        8,
+        12,
+        50,
+        75,
+        103,
+        108,
+        208,
+        240
+      ],
+      "evolve": [
+        9
+      ],
+      "in": [
+        10,
+        64,
+        136,
+        146,
+        184,
+        203,
+        247
+      ],
+      "response": [
+        11
+      ],
+      "changing": [
+        13
+      ],
+      "market": [
+        14,
+        156
+      ],
+      "needs.": [
+        15
+      ],
+      "Current": [
+        16
+      ],
+      "drivers": [
+        17
+      ],
+      "such": [
+        18,
+        57,
+        166,
+        192,
+        205
+      ],
+      "as": [
+        19,
+        58,
+        167
+      ],
+      "consumer's": [
+        20
+      ],
+      "demand": [
+        21,
+        34
+      ],
+      "for": [
+        22,
+        35,
+        43,
+        194
+      ],
+      "safer,": [
+        23
+      ],
+      "\"healthier,\"": [
+        24
+      ],
+      "and": [
+        25,
+        37,
+        40,
+        155,
+        174,
+        211,
+        225,
+        243
+      ],
+      "higher-quality": [
+        26
+      ],
+      "foods,": [
+        27
+      ],
+      "ideally": [
+        28
+      ],
+      "with": [
+        29,
+        228
+      ],
+      "a": [
+        30,
+        229
+      ],
+      "long": [
+        31
+      ],
+      "shelf-life;": [
+        32
+      ],
+      "the": [
+        33,
+        41,
+        51,
+        65,
+        88,
+        92,
+        95,
+        105,
+        112,
+        152,
+        189,
+        201,
+        212,
+        233
+      ],
+      "convenient": [
+        36
+      ],
+      "transparent": [
+        38
+      ],
+      "packaging,": [
+        39
+      ],
+      "preference": [
+        42
+      ],
+      "more": [
+        44
+      ],
+      "sustainable": [
+        45
+      ],
+      "materials,": [
+        47
+      ],
+      "have": [
+        48,
+        130
+      ],
+      "led": [
+        49
+      ],
+      "development": [
+        52,
+        154
+      ],
+      "new": [
+        54
+      ],
+      "technologies,": [
+        56,
+        165
+      ],
+      "active": [
+        59
+      ],
+      "(AP).": [
+        61
+      ],
+      "As": [
+        62
+      ],
+      "defined": [
+        63
+      ],
+      "European": [
+        66
+      ],
+      "regulation": [
+        67
+      ],
+      "(EC)": [
+        68
+      ],
+      "No": [
+        69
+      ],
+      "450/2009,": [
+        70
+      ],
+      "AP": [
+        71,
+        121,
+        164,
+        206,
+        236
+      ],
+      "systems": [
+        72,
+        175,
+        210
+      ],
+      "are": [
+        73,
+        100,
+        198,
+        218
+      ],
+      "designed": [
+        74
+      ],
+      "\"deliberately": [
+        76
+      ],
+      "incorporate": [
+        77
+      ],
+      "components": [
+        78
+      ],
+      "that": [
+        79
+      ],
+      "would": [
+        80
+      ],
+      "release": [
+        81
+      ],
+      "or": [
+        82,
+        86,
+        91,
+        107,
+        110,
+        170,
+        179
+      ],
+      "absorb": [
+        83
+      ],
+      "substances": [
+        84
+      ],
+      "into": [
+        85
+      ],
+      "from": [
+        87
+      ],
+      "packaged": [
+        89,
+        115
+      ],
+      "environment": [
+        93
+      ],
+      "surrounding": [
+        94
+      ],
+      "food.\"": [
+        96,
+        116
+      ],
+      "Active": [
+        97
+      ],
+      "materials": [
+        99
+      ],
+      "thereby": [
+        101
+      ],
+      "\"intended": [
+        102
+      ],
+      "extend": [
+        104
+      ],
+      "shelf-life": [
+        106
+      ],
+      "maintain": [
+        109
+      ],
+      "improve": [
+        111
+      ],
+      "condition": [
+        113
+      ],
+      "Although": [
+        117
+      ],
+      "extensive": [
+        118
+      ],
+      "research": [
+        119
+      ],
+      "on": [
+        120
+      ],
+      "technologies": [
+        122,
+        129,
+        193,
+        207,
+        237
+      ],
+      "being": [
+        124
+      ],
+      "undertaken,": [
+        125
+      ],
+      "many": [
+        126
+      ],
+      "these": [
+        128
+      ],
+      "not": [
+        131
+      ],
+      "yet": [
+        132
+      ],
+      "been": [
+        133
+      ],
+      "implemented": [
+        134
+      ],
+      "successfully": [
+        135
+      ],
+      "commercial": [
+        137,
+        249
+      ],
+      "systems.": [
+        140
+      ],
+      "Broad": [
+        141
+      ],
+      "communication": [
+        142
+      ],
+      "their": [
+        144
+      ],
+      "benefits": [
+        145,
+        190,
+        234
+      ],
+      "product": [
+        148
+      ],
+      "applications": [
+        149
+      ],
+      "will": [
+        150,
+        222
+      ],
+      "facilitate": [
+        151
+      ],
+      "successful": [
+        153
+      ],
+      "introduction.": [
+        157
+      ],
+      "In": [
+        158
+      ],
+      "this": [
+        159
+      ],
+      "review,": [
+        160
+      ],
+      "an": [
+        161
+      ],
+      "overview": [
+        162
+      ],
+      "antimicrobial,": [
+        168
+      ],
+      "antioxidant": [
+        169
+      ],
+      "carbon": [
+        171
+      ],
+      "dioxide-releasing": [
+        172
+      ],
+      "systems,": [
+        173
+      ],
+      "absorbing": [
+        176
+      ],
+      "oxygen,": [
+        177
+      ],
+      "moisture": [
+        178
+      ],
+      "ethylene,": [
+        180
+      ],
+      "provided,": [
+        182
+      ],
+      "and,": [
+        183
+      ],
+      "particular,": [
+        185
+      ],
+      "scientific": [
+        186
+      ],
+      "publications": [
+        187
+      ],
+      "illustrating": [
+        188
+      ],
+      "specific": [
+        195,
+        241
+      ],
+      "products": [
+        197
+      ],
+      "reviewed.": [
+        199
+      ],
+      "Furthermore,": [
+        200
+      ],
+      "challenges": [
+        202
+      ],
+      "applying": [
+        204
+      ],
+      "anticipated": [
+        213
+      ],
+      "direction": [
+        214
+      ],
+      "future": [
+        216
+      ],
+      "developments": [
+        217
+      ],
+      "discussed.": [
+        219
+      ],
+      "This": [
+        220
+      ],
+      "review": [
+        221
+      ],
+      "provide": [
+        223
+      ],
+      "scientists": [
+        227
+      ],
+      "thorough": [
+        230
+      ],
+      "understanding": [
+        231
+      ],
+      "when": [
+        238
+      ],
+      "applied": [
+        239
+      ],
+      "foods": [
+        242
+      ],
+      "hence": [
+        244
+      ],
+      "can": [
+        245
+      ],
+      "assist": [
+        246
+      ],
+      "accelerating": [
+        248
+      ],
+      "adoption.": [
+        250
+      ]
+    }
+  },
+  "cakes": {
+    "title": "Applications of nanotechnology in food packaging and food safety: Barrier materials, antimicrobials and sensors",
+    "doi": "https://doi.org/10.1016/j.jcis.2011.07.017",
+    "abstract": null
+  },
+  "muffins": {
+    "title": "Drivers of food waste and their implications for sustainable policy development",
+    "doi": "https://doi.org/10.1016/j.resconrec.2015.11.016",
+    "abstract": null
+  },
+  "pastries": {
+    "title": "Review of Green Food Processing techniques. Preservation, transformation, and extraction",
+    "doi": "https://doi.org/10.1016/j.ifset.2017.04.016",
+    "abstract": null
+  }
+}

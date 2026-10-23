@@ -66,14 +66,14 @@ class CandidateBarrierProperties(BaseModel):
     wvtr: Optional[BarrierPropertyMetric] = Field(default=None, description="Water Vapor Transmission Rate")
 
 class PackageGeometry(BaseModel):
-    surface_area_m2: float = Field(..., gt=0.0)
-    headspace_volume_cm3: float = Field(..., ge=0.0)
-    product_mass_kg: float = Field(..., gt=0.0)
+    surface_area_m2: Optional[float] = Field(default=None, gt=0.0)
+    headspace_volume_cm3: Optional[float] = Field(default=None, ge=0.0)
+    product_mass_kg: Optional[float] = Field(default=None, gt=0.0)
 
 class CandidateDecisionVariables(BaseModel):
     structure_type: Optional[str] = Field(default=None, description="MONOLAYER, MULTILAYER, COATED, or None")
     layer_sequence: List[str] = Field(default_factory=list)
-    total_thickness_um: float = Field(..., gt=0.0)
+    total_thickness_um: Optional[float] = Field(default=None, gt=0.0)
     thickness_is_continuous_scaled: bool = Field(default=False)
     thickness_source: str = Field(..., description="Must explicitly state provenance, e.g., 'observed_discrete_m5'")
 
@@ -183,8 +183,8 @@ class OptimizationInputEnvelope(BaseModel):
     optimization_run_id: str
     commodity: str
     target_shelf_life_days: int
-    storage_temperature_c: float
-    relative_humidity_percent: float
+    storage_temperature_c: Optional[float] = None
+    relative_humidity_percent: Optional[float] = None
     package_geometry: PackageGeometry
     packaging_requirement_envelope: PackagingRequirementEnvelope
     filtering_result: FilteringResult

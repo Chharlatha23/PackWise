@@ -19,6 +19,7 @@ from app.schemas.inference import (
     InferenceWarning,
     InferredProperty,
     PropertyInferenceProfile,
+    UncertaintyLevelEnum,
 )
 from app.schemas.packaging_request import PackagingRequest
 from app.schemas.property_status import PropertyStatusEnum
@@ -60,7 +61,7 @@ class PropertyInferenceEngine:
     """
     Core inference engine responsible for evaluating user input, searching
     scientific literature evidence, resolving context hierarchies, and producing
-    an evidence-backed property profile.
+    an evidence-backed property profile with explicit Phase 2 uncertainty levels (D/A/B).
     """
 
     def __init__(self, dataset: Optional[FoodEvidenceDataset] = None) -> None:
@@ -71,7 +72,7 @@ class PropertyInferenceEngine:
         Infer a complete scientific property profile for the given packaging request.
 
         Preserves user-supplied values with highest precedence, queries scientific
-        evidence for missing values, and strictly marks unobserved properties as UNKNOWN.
+        evidence for missing values, and strictly marks unobserved properties as UNKNOWN (Level D).
         """
         profile = PropertyInferenceProfile(
             commodity=request.commodity,
@@ -131,7 +132,7 @@ class PropertyInferenceEngine:
         request: PackagingRequest,
     ) -> InferredProperty:
         """Resolve a property either from user input (precedence 1) or from evidence lookup."""
-        # Case A: User explicitly supplied the value
+        # Case A: User explicitly supplied the value -> Level A (Deterministic estimate)
         if user_value is not None:
             unit = STANDARD_UNITS.get(prop_field, None)
             return InferredProperty(
@@ -140,8 +141,10 @@ class PropertyInferenceEngine:
                 unit=unit,
                 status=PropertyStatusEnum.measured,
                 resolution_level=InferenceResolutionLevel.USER_SUPPLIED,
+                uncertainty_level=UncertaintyLevelEnum.LEVEL_A,
                 confidence=1.0,
                 uncertainty_range=(user_value, user_value),
+                evidence_interval=None,
                 minimum_value=user_value,
                 maximum_value=user_value,
                 acquisition_method="user_supplied_input",
@@ -172,7 +175,7 @@ class PropertyInferenceEngine:
                 if any(r.property.lower() == alias.lower() for alias in property_aliases):
                     candidates.append(r)
 
-        # If no records exist for this commodity and property at all
+        # If no records exist for this commodity and property at all -> Level D (UNKNOWN)
         if not candidates:
             return InferredProperty(
                 property_name=prop_field,
@@ -180,8 +183,10 @@ class PropertyInferenceEngine:
                 unit=STANDARD_UNITS.get(prop_field, None),
                 status=PropertyStatusEnum.unknown,
                 resolution_level=InferenceResolutionLevel.UNKNOWN,
+                uncertainty_level=UncertaintyLevelEnum.LEVEL_D,
                 confidence=None,
                 uncertainty_range=None,
+                evidence_interval=None,
                 minimum_value=None,
                 maximum_value=None,
                 supporting_evidence=[],
@@ -319,7 +324,7 @@ class PropertyInferenceEngine:
                 cit_parts.append(f"URL: {rec.URL}")
             citations.append(" ".join(cit_parts) if cit_parts else "Unpublished Reference")
 
-        # If no numerical values could be gathered from matching records
+        # If no numerical values could be gathered from matching records -> Level D (UNKNOWN)
         all_numeric = observed_values + observed_mins + observed_maxs
         if not all_numeric:
             return InferredProperty(
@@ -328,8 +333,10 @@ class PropertyInferenceEngine:
                 unit=unit or STANDARD_UNITS.get(prop_field, None),
                 status=PropertyStatusEnum.unknown,
                 resolution_level=resolution,
+                uncertainty_level=UncertaintyLevelEnum.LEVEL_D,
                 confidence=None,
                 uncertainty_range=None,
+                evidence_interval=None,
                 minimum_value=None,
                 maximum_value=None,
                 supporting_evidence=candidates,
@@ -348,7 +355,30 @@ class PropertyInferenceEngine:
         else:
             point_estimate = round((min_val + max_val) / 2.0, 2)
 
-        # Calculate adjusted confidence
+        # Determine scientific uncertainty classification (LEVEL_A vs LEVEL_B)
+        # LEVEL_B applies if a range was reported, if multiple observations exist, or if contextual fallback widened the envelope.
+        has_range = (
+            min_val < max_val
+            or len(observed_mins) > 0
+            or len(observed_maxs) > 0
+            or len(candidates) > 1
+            or resolution in [
+                InferenceResolutionLevel.VARIETY_FALLBACK,
+                InferenceResolutionLevel.FORM_FALLBACK,
+                InferenceResolutionLevel.CLOSEST_TEMPERATURE_BOUND,
+            ]
+        )
+
+        is_all_literature = all(c.status == PropertyStatusEnum.literature for c in candidates)
+
+        if has_range or is_all_literature:
+            uncertainty_level = UncertaintyLevelEnum.LEVEL_B
+            evidence_interval = (min_val, max_val)
+        else:
+            uncertainty_level = UncertaintyLevelEnum.LEVEL_A
+            evidence_interval = None
+
+        # Calculate adjusted confidence (Heuristic quality score, NOT a probability)
         raw_conf = sum(base_confidences) / len(base_confidences) if base_confidences else 0.8
         discount = 0.0
         if resolution == InferenceResolutionLevel.VARIETY_FALLBACK:
@@ -373,8 +403,10 @@ class PropertyInferenceEngine:
             unit=unit or STANDARD_UNITS.get(prop_field, None),
             status=status,
             resolution_level=resolution,
+            uncertainty_level=uncertainty_level,
             confidence=final_confidence,
             uncertainty_range=uncertainty_range,
+            evidence_interval=evidence_interval,
             minimum_value=min_val,
             maximum_value=max_val,
             supporting_evidence=candidates,
@@ -391,3 +423,4 @@ def infer_commodity_properties(
     """Convenience function to run property inference on a PackagingRequest."""
     engine = PropertyInferenceEngine(dataset=dataset)
     return engine.infer_profile(request)
+

@@ -2,12 +2,12 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from backend.app.core.database import get_db
-from backend.app.schemas.packaging_request import PackagingRequest
-from backend.app.schemas.recommendation import RecommendationResponse
-from backend.app.schemas.feedback import FeedbackSubmission, FeedbackResponse, ModelUpdateCandidateSchema
-from backend.app.services.recommendation_service import RecommendationService
-from backend.app.services.feedback_service import FeedbackService
+from app.core.database import get_db
+from app.schemas.packaging_request import PackagingRequest
+from app.schemas.recommendation import RecommendationResponse
+from app.schemas.feedback import FeedbackSubmission, FeedbackResponse, ModelUpdateCandidateSchema
+from app.services.recommendation_service import RecommendationService
+from app.services.feedback_service import FeedbackService
 
 router = APIRouter()
 
@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get("/health")
 def health_check() -> dict:
     """Returns a simple status response confirming the API is running."""
-    return {"status": "ok", "service": "AI Food Packaging Optimizer API"}
+    return {"status": "ok", "service": "FoodPack AI API"}
 
 
 @router.post(

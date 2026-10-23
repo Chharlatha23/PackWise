@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.orm import relationship
 import uuid
 import enum
-from backend.app.core.database import Base
+from app.core.database import Base
 
 # SQLAlchemy JSONB fallback for sqlite testing
 from sqlalchemy.ext.compiler import compiles

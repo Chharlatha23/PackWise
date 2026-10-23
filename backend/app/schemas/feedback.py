@@ -13,7 +13,7 @@ Defines structured data models for:
 
 from typing import Dict, List, Optional, Any
 from pydantic import BaseModel, Field
-from backend.app.models.feedback import (
+from app.models.feedback import (
     ObservationOrigin,
     ValidationStatus,
     ComparisonStatus,

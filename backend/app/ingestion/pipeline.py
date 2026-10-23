@@ -7,7 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from typing import Dict, List, Any, Optional
 import logging
 
-from backend.app.models.evidence import (
+from app.models.evidence import (
     Source, EvidenceRecord, ValidationResult, DataTransformation,
     FoodCommodity, FoodObservation,
     RespirationObservation, PostharvestStorageLimits, PostharvestGasTolerances,
@@ -16,7 +16,7 @@ from backend.app.models.evidence import (
     MicrobialGasInhibitionResponse, EvidenceClassification, VerificationStatus,
     GasSpecies, PropertyType, MissingnessStatus, ProcessingState, StructureType
 )
-from backend.app.core.database import SessionLocal
+from app.core.database import SessionLocal
 
 logger = logging.getLogger(__name__)
 
@@ -40,11 +40,16 @@ SHORT_KEY_TO_LONG_MAP = {v: k for k, v in DATASET_KEY_MAP.items()}
 
 
 class DataIngestionPipeline:
-    def __init__(self, db: Session, base_dir: str = "data/processed",
-                 reference_dir: str = "data/reference"):
+    def __init__(self, db: Session, base_dir: str = "../data/processed",
+                 reference_dir: str = "../data/reference"):
         self.db = db
         self.base_dir = Path(base_dir)
         self.reference_dir = Path(reference_dir)
+        if not self.base_dir.exists():
+            root_candidate = Path(__file__).resolve().parent.parent.parent.parent / "data" / "processed"
+            if root_candidate.exists():
+                self.base_dir = root_candidate
+                self.reference_dir = root_candidate.parent / "reference"
         self.stats = {
             "datasets_processed": 0,
             "total_input_records": 0,
@@ -853,7 +858,7 @@ class DataIngestionPipeline:
     # Entity count collection
     # ===========================================================
     def _collect_entity_counts(self):
-        from backend.app.models.evidence import (
+        from app.models.evidence import (
             Source as SourceModel, EvidenceRecord as ERModel,
             ValidationResult as VRModel, DataTransformation as DTModel,
             FoodCommodity as FCModel, FoodObservation as FOModel,

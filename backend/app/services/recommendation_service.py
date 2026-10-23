@@ -29,13 +29,13 @@ from typing import List, Optional
 
 from sqlalchemy.orm import Session
 
-from backend.app.core.database import Base
-from backend.app.models.evidence import PackagingMaterial
-from backend.app.ingestion.pipeline import DataIngestionPipeline
+from app.core.database import Base
+from app.models.evidence import PackagingMaterial
+from app.ingestion.pipeline import DataIngestionPipeline
 
-from backend.app.schemas.packaging_request import PackagingRequest
-from backend.app.schemas.recommendation import RecommendationResponse, CandidateEvaluationSummary
-from backend.app.schemas.optimization import (
+from app.schemas.packaging_request import PackagingRequest
+from app.schemas.recommendation import RecommendationResponse, CandidateEvaluationSummary
+from app.schemas.optimization import (
     OptimizationInputEnvelope,
     PackageGeometry,
     SolverConfiguration,
@@ -48,7 +48,8 @@ from scientific_engine.optimization.candidate_builder import CandidateBuilder
 from scientific_engine.optimization.search_engine import (
     AbstractInverseDesignSearchEngine,
     DeterministicEnumerationSearchEngine,
-    IntelligentInverseDesignSearchEngine
+    IntelligentInverseDesignSearchEngine,
+    AISurrogatePrioritizedSearchEngine
 )
 
 
@@ -65,6 +66,8 @@ class RecommendationService:
         
         if search_engine:
             self.search_engine = search_engine
+        elif search_engine_type in ("ai_surrogate_prioritized", "m11", "surrogate_prioritized"):
+            self.search_engine = AISurrogatePrioritizedSearchEngine()
         elif search_engine_type == "intelligent":
             self.search_engine = IntelligentInverseDesignSearchEngine()
         else:
@@ -84,7 +87,9 @@ class RecommendationService:
 
         # Resolve active search engine instance for this recommendation run
         active_engine = self.search_engine
-        if search_engine_type == "intelligent":
+        if search_engine_type in ("ai_surrogate_prioritized", "m11", "surrogate_prioritized"):
+            active_engine = AISurrogatePrioritizedSearchEngine()
+        elif search_engine_type == "intelligent":
             active_engine = IntelligentInverseDesignSearchEngine()
         elif search_engine_type == "deterministic_exhaustive":
             active_engine = DeterministicEnumerationSearchEngine()
@@ -114,14 +119,11 @@ class RecommendationService:
         # ------------------------------------------------------------------
         # 2. Phase 4 Scientific Requirement Engine
         # ------------------------------------------------------------------
-        product_mass_kg = request.product_mass_kg if request.product_mass_kg is not None else 0.5
-        package_area_m2 = request.package_surface_area_m2 if request.package_surface_area_m2 is not None else 0.06
-
         requirement_envelope = self.requirement_engine.evaluate_requirements(
             request=request,
             inference_profile=inference_profile,
-            product_mass_kg=product_mass_kg,
-            package_area_m2=package_area_m2
+            product_mass_kg=request.product_mass_kg,
+            package_area_m2=request.package_surface_area_m2
         )
 
         # ------------------------------------------------------------------
@@ -134,9 +136,9 @@ class RecommendationService:
         # 4. Construct OptimizationInputEnvelope for Search Engine Layer
         # ------------------------------------------------------------------
         geometry = PackageGeometry(
-            surface_area_m2=package_area_m2,
-            headspace_volume_cm3=request.package_headspace_volume_cm3 if request.package_headspace_volume_cm3 is not None else 500.0,
-            product_mass_kg=product_mass_kg
+            surface_area_m2=request.package_surface_area_m2,
+            headspace_volume_cm3=request.package_headspace_volume_cm3,
+            product_mass_kg=request.product_mass_kg
         )
 
         filtering_result = FilteringResult(
@@ -148,8 +150,8 @@ class RecommendationService:
             optimization_run_id=run_id,
             commodity=request.commodity,
             target_shelf_life_days=request.target_shelf_life_days,
-            storage_temperature_c=request.storage_temperature_c if request.storage_temperature_c is not None else 4.0,
-            relative_humidity_percent=request.relative_humidity_percent if request.relative_humidity_percent is not None else 90.0,
+            storage_temperature_c=request.storage_temperature_c,
+            relative_humidity_percent=request.relative_humidity_percent,
             package_geometry=geometry,
             packaging_requirement_envelope=requirement_envelope,
             filtering_result=filtering_result,

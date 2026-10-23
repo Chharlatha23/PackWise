@@ -5,12 +5,12 @@ Schema definitions for the Recommendation Service and API endpoints.
 from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
-from backend.app.schemas.packaging_request import PackagingRequest
-from backend.app.schemas.inference import PropertyInferenceProfile
-from backend.app.schemas.packaging_requirements import PackagingRequirementEnvelope
-from backend.app.schemas.optimization import ParetoFront, CandidateConstraintStatus
-from backend.app.schemas.physics import ScientificTraceability
-from backend.app.schemas.explainability import (
+from app.schemas.packaging_request import PackagingRequest
+from app.schemas.inference import PropertyInferenceProfile
+from app.schemas.packaging_requirements import PackagingRequirementEnvelope
+from app.schemas.optimization import ParetoFront, CandidateConstraintStatus
+from app.schemas.physics import ScientificTraceability
+from app.schemas.explainability import (
     CandidateExplainabilityReport,
     PipelineExplainabilitySummary
 )
@@ -22,10 +22,16 @@ class CandidateEvaluationSummary(BaseModel):
     candidate_id: str = Field(..., description="Unique candidate ID")
     material_id: str = Field(..., description="M5 material ID")
     material_name: str = Field(..., description="Descriptive name of candidate material")
-    total_thickness_um: float = Field(..., description="Total nominal thickness in µm")
+    total_thickness_um: Optional[float] = Field(default=None, description="Total nominal thickness in µm")
     constraint_status: str = Field(..., description="Phase 5 constraint status: FEASIBLE, INFEASIBLE, UNKNOWN")
     all_hard_constraints_satisfied: bool = Field(..., description="True if all hard barrier constraints pass")
     evaluation_details: Optional[CandidateConstraintStatus] = Field(default=None, description="Detailed constraint evaluations")
+    applicability_state: Optional[str] = Field(default=None, description="Surrogate applicability state: IN_DOMAIN, OUT_OF_DOMAIN, UNEVALUABLE, NEAR_BOUNDARY")
+    prediction_status: Optional[str] = Field(default=None, description="Surrogate prediction status: PREDICTED, BYPASSED_OOD, DISABLED_UNEVALUABLE, FAILED_COMPATIBILITY")
+    evaluation_state: Optional[str] = Field(default=None, description="Exact-physics evaluation state: NOT_EVALUATED, EVALUATION_UNRESOLVED, EVALUATED_NOT_ELIGIBLE, ELIGIBLE")
+    gate3_evaluable: Optional[bool] = Field(default=None, description="Pre-execution Gate 3 scientific evaluability check result")
+    predicted_shelf_life: Optional[float] = Field(default=None, description="Layer 4 surrogate predicted shelf life in days if PREDICTED")
+    surrogate_lineage: Optional[Dict[str, Any]] = Field(default=None, description="Registered model manifest lineage if PREDICTED")
     explainability: Optional[CandidateExplainabilityReport] = Field(default=None, description="M11 candidate feasibility, constraint, objective, provenance, and counterfactual explanation report")
 
 

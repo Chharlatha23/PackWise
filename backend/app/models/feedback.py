@@ -13,7 +13,7 @@ import uuid
 import enum
 from datetime import datetime, timezone
 
-from backend.app.core.database import Base
+from app.core.database import Base
 
 # SQLAlchemy JSONB & UUID fallback for sqlite testing
 from sqlalchemy.ext.compiler import compiles

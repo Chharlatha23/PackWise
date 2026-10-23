@@ -10,7 +10,7 @@ Defines structured data models for:
 - PipelineExplainabilitySummary
 """
 
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 
@@ -87,6 +87,12 @@ class CandidateExplainabilityReport(BaseModel):
     material_name: str = Field(..., description="Human-readable material name")
     total_thickness_um: float = Field(..., description="Total nominal thickness in µm")
     overall_feasibility_status: str = Field(..., description="FEASIBLE, INFEASIBLE, or UNKNOWN")
+    applicability_state: Optional[str] = Field(default=None, description="Surrogate applicability state: IN_DOMAIN, OUT_OF_DOMAIN, UNEVALUABLE, NEAR_BOUNDARY")
+    prediction_status: Optional[str] = Field(default=None, description="Surrogate prediction status: PREDICTED, BYPASSED_OOD, DISABLED_UNEVALUABLE, FAILED_COMPATIBILITY")
+    evaluation_state: Optional[str] = Field(default=None, description="Exact-physics evaluation state: NOT_EVALUATED, EVALUATION_UNRESOLVED, EVALUATED_NOT_ELIGIBLE, ELIGIBLE")
+    ai_search_explanation: Optional[str] = Field(default=None, description="AI surrogate prioritization & search behavior explanation")
+    physics_limiting_explanation: Optional[str] = Field(default=None, description="Physics-derived limiting factor explanation")
+    surrogate_lineage: Optional[Dict[str, Any]] = Field(default=None, description="Registered model manifest lineage if prediction exists")
     constraint_explanations: List[ConstraintExplanation] = Field(default_factory=list, description="Per-constraint explanations")
     objective_explanations: List[ObjectiveExplanation] = Field(default_factory=list, description="Per-objective explanations")
     provenance_reference: EvidenceProvenanceReference = Field(..., description="Evidence provenance reference")

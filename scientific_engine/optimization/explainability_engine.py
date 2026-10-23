@@ -23,7 +23,7 @@ from app.schemas.optimization import (
 from app.schemas.packaging_requirements import PackagingRequirementEnvelope
 from app.schemas.constraints import ConstraintEvaluation, ConstraintStatus
 from scientific_engine.optimization.candidate_evaluator import CandidateScientificEvaluationResult
-from backend.app.schemas.explainability import (
+from app.schemas.explainability import (
     ConstraintExplanation,
     ObjectiveExplanation,
     CounterfactualExplanation,
@@ -44,7 +44,8 @@ class ExplainabilityEngine:
         eval_result: CandidateScientificEvaluationResult,
         objectives: Dict[str, ObjectiveValue],
         envelope: PackagingRequirementEnvelope,
-        pareto_front: Optional[ParetoFront] = None
+        pareto_front: Optional[ParetoFront] = None,
+        m11_context: Optional[Dict[str, Any]] = None,
     ) -> CandidateExplainabilityReport:
         """
         Generate a complete CandidateExplainabilityReport for a single candidate.
@@ -66,6 +67,33 @@ class ExplainabilityEngine:
         # 5. Pareto Membership Explanation
         pareto_explanation = self._explain_pareto_membership(candidate, feasibility_status, pareto_front)
 
+        # 6. Separate Physics-Derived Limiting Factors vs AI Search Behavior
+        infeasible_constraints = [c for c in constraint_explanations if c.status == "INFEASIBLE"]
+        if infeasible_constraints:
+            reasons = [f"{c.constraint_type} limit violated ({c.explanation_text})" for c in infeasible_constraints]
+            physics_limiting = f"Physics-Derived Limiting Factor: Candidate is INFEASIBLE because {'; '.join(reasons)}."
+        elif feasibility_status == "FEASIBLE":
+            physics_limiting = "Physics-Derived Limiting Factor: Candidate satisfies all physical barrier constraints (OTR, CO2TR, WVTR)."
+        else:
+            physics_limiting = "Physics-Derived Limiting Factor: Constraint feasibility could not be determined due to missing parameters."
+
+        app_state = m11_context.get("app_state") if m11_context else None
+        pred_status = m11_context.get("pred_status") if m11_context else None
+        eval_state = m11_context.get("issue5_state") if m11_context else None
+        pred_sl = m11_context.get("predicted_shelf_life") if m11_context else None
+        lineage = m11_context.get("surrogate_lineage") if m11_context else None
+
+        if pred_status == "PREDICTED" and pred_sl is not None:
+            ai_explanation = f"AI Search Prioritization: Surrogate predicted shelf life of {pred_sl:.1f} days (Applicability: {app_state}). DISCLAIMER: AI feature influence describes surrogate model prioritization behavior and does not establish physical causality."
+        elif pred_status == "BYPASSED_OOD":
+            ai_explanation = "AI Search Prioritization: Candidate is OUT_OF_DOMAIN. Surrogate inference was intentionally bypassed; candidate was routed directly to exact-physics evaluation."
+        elif pred_status == "DISABLED_UNEVALUABLE":
+            ai_explanation = "AI Search Prioritization: Surrogate evaluation disabled due to missing candidate features."
+        elif pred_status == "FAILED_COMPATIBILITY":
+            ai_explanation = "AI Search Prioritization: Registered model manifest compatibility failed."
+        else:
+            ai_explanation = "Exact-Physics Baseline: Candidate evaluated under exact physics pathway without surrogate prioritization."
+
         # Aggregate warnings
         candidate_warnings = list(dict.fromkeys(eval_result.warnings + eval_result.failure_reasons))
 
@@ -73,8 +101,14 @@ class ExplainabilityEngine:
             candidate_id=candidate.candidate_id,
             material_id=candidate.material_id,
             material_name=candidate.material_name,
-            total_thickness_um=candidate.decision_variables.total_thickness_um or 50.0,
+            total_thickness_um=candidate.decision_variables.total_thickness_um or 0.0,
             overall_feasibility_status=feasibility_status,
+            applicability_state=app_state,
+            prediction_status=pred_status,
+            evaluation_state=eval_state,
+            ai_search_explanation=ai_explanation,
+            physics_limiting_explanation=physics_limiting,
+            surrogate_lineage=lineage,
             constraint_explanations=constraint_explanations,
             objective_explanations=objective_explanations,
             provenance_reference=provenance,
@@ -249,14 +283,16 @@ class ExplainabilityEngine:
                 text = f"Objective {obj_name} ({direction}): evaluated to {val_str}."
 
                 if other_pareto_cands and obj_name == "f_thickness":
-                    cand_thick = candidate.decision_variables.total_thickness_um or 50.0
-                    for other in other_pareto_cands[:2]:
-                        other_thick = other.candidate_design.decision_variables.total_thickness_um or 50.0
-                        diff = cand_thick - other_thick
-                        if diff < 0:
-                            trade_offs.append(f"Compared to Pareto candidate '{other.candidate_design.material_name}' ({other_thick} µm), this design reduces total thickness by {abs(diff):.1f} µm.")
-                        elif diff > 0:
-                            trade_offs.append(f"Compared to Pareto candidate '{other.candidate_design.material_name}' ({other_thick} µm), this design has {diff:.1f} µm greater thickness.")
+                    cand_thick = candidate.decision_variables.total_thickness_um
+                    if cand_thick is not None:
+                        for other in other_pareto_cands[:2]:
+                            other_thick = other.candidate_design.decision_variables.total_thickness_um
+                            if other_thick is not None:
+                                diff = cand_thick - other_thick
+                                if diff < 0:
+                                    trade_offs.append(f"Compared to Pareto candidate '{other.candidate_design.material_name}' ({other_thick} µm), this design reduces total thickness by {abs(diff):.1f} µm.")
+                                elif diff > 0:
+                                    trade_offs.append(f"Compared to Pareto candidate '{other.candidate_design.material_name}' ({other_thick} µm), this design has {diff:.1f} µm greater thickness.")
                 elif other_pareto_cands and obj_name == "f_moisture_margin":
                     for other in other_pareto_cands[:2]:
                         other_obj = other.objective_values.get("f_moisture_margin")

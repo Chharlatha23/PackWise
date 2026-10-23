@@ -79,6 +79,37 @@ class CandidateScientificEvaluator:
             properties=properties
         )
 
+    def validate_pre_execution_evaluability(
+        self, request: CandidateScientificEvaluationRequest
+    ) -> Tuple[bool, Optional[str]]:
+        """
+        Evaluates pre-execution scientific evaluability derived from the physics contract.
+        Answers: Can exact physics be meaningfully attempted for this candidate request given available required inputs?
+        Does NOT execute exact physics calculations or hard constraint evaluation.
+        """
+        candidate = request.candidate
+        base_env = request.base_requirement_envelope
+        geometry = request.package_geometry
+
+        if not candidate.material_name and not candidate.material_id:
+            return False, "Missing required material identity"
+
+        if not candidate.decision_variables or candidate.decision_variables.total_thickness_um is None or candidate.decision_variables.total_thickness_um <= 0.0:
+            return False, "Missing required material thickness"
+
+        if base_env.storage_temperature_c is None:
+            return False, "Missing required storage temperature"
+
+        if base_env.relative_humidity_percent is None:
+            return False, "Missing required storage relative humidity"
+
+        # Conditional requirement: Package area geometry required if candidate package-level barrier calculation is required
+        if candidate.barrier_properties and (candidate.barrier_properties.wvtr or candidate.barrier_properties.otr or candidate.barrier_properties.co2tr):
+            if geometry is None or geometry.surface_area_m2 is None or geometry.surface_area_m2 <= 0.0:
+                return False, "Missing required package area geometry for candidate barrier recalculation"
+
+        return True, None
+
     def evaluate_candidate(self, request: CandidateScientificEvaluationRequest) -> CandidateScientificEvaluationResult:
         candidate = request.candidate
         base_env = request.base_requirement_envelope

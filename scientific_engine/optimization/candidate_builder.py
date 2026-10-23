@@ -3,7 +3,7 @@ import itertools
 from typing import List
 from sqlalchemy.orm import Session
 
-from backend.app.models.evidence import PackagingMaterial, MaterialBarrierObservation, EvidenceRecord
+from app.models.evidence import PackagingMaterial, MaterialBarrierObservation, EvidenceRecord
 from app.schemas.optimization import (
     PackagingCandidate,
     CandidateDecisionVariables,
@@ -149,8 +149,8 @@ class CandidateBuilder:
 
                 decision_vars = CandidateDecisionVariables(
                     structure_type=mat.structure_type,
-                    total_thickness_um=50.0, # default fallback for un-specified thickness
-                    thickness_source="nominal_default"
+                    total_thickness_um=None,
+                    thickness_source="unknown"
                 )
 
                 cand_id = str(uuid.uuid5(uuid.NAMESPACE_DNS, f"{mat.id}-default"))

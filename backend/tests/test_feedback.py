@@ -28,9 +28,9 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
-from backend.app.core.database import Base
-from backend.app.main import app
-from backend.app.models.feedback import (
+from app.core.database import Base, get_db
+from app.main import app
+from app.models.feedback import (
     PackagingFeedbackRecord,
     ModelUpdateCandidate,
     ObservationOrigin,
@@ -38,20 +38,20 @@ from backend.app.models.feedback import (
     ComparisonStatus,
     ModelUpdateStatus
 )
-from backend.app.schemas.feedback import (
+from app.schemas.feedback import (
     FeedbackSubmission,
     PredictedOutputSchema,
     PackageConfigurationSchema,
     StorageConditionsSchema
 )
-from backend.app.services.feedback_service import FeedbackService
+from app.services.feedback_service import FeedbackService
 from scientific_engine.optimization.feedback_engine import FeedbackEngine
 
 
 @pytest.fixture
 def db_session():
     """In-memory SQLite database session fixture."""
-    engine = create_engine("sqlite:///:memory:")
+    engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     Base.metadata.create_all(engine)
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     session = TestingSessionLocal()
@@ -59,6 +59,17 @@ def db_session():
         yield session
     finally:
         session.close()
+
+
+@pytest.fixture
+def api_client(db_session):
+    """TestClient with get_db overridden to use the in-memory SQLite session."""
+    def _override_get_db():
+        yield db_session
+    app.dependency_overrides[get_db] = _override_get_db
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.pop(get_db, None)
 
 
 def test_valid_feedback_submission(db_session: Session):
@@ -257,10 +268,8 @@ def test_model_update_candidate_review_required(db_session: Session):
     assert cand.affected_component == "GAS_EXCHANGE_ENGINE"
 
 
-def test_api_feedback_endpoints():
+def test_api_feedback_endpoints(api_client):
     """Test 18: REST API endpoints for submitting and retrieving feedback records."""
-    client = TestClient(app)
-    
     payload = {
         "trial_identifier": "API-TRIAL-01",
         "observation_origin": "REAL_PRODUCTION",
@@ -271,18 +280,18 @@ def test_api_feedback_endpoints():
         }
     }
 
-    response = client.post("/api/v1/feedback", json=payload)
+    response = api_client.post("/api/v1/feedback", json=payload)
     assert response.status_code == 201, f"Response: {response.json()}"
     data = response.json()
     assert data["trial_identifier"] == "API-TRIAL-01"
     assert data["validation_status"] == "VALID"
     feedback_id = data["feedback_id"]
 
-    get_resp = client.get(f"/api/v1/feedback/{feedback_id}")
+    get_resp = api_client.get(f"/api/v1/feedback/{feedback_id}")
     assert get_resp.status_code == 200
     get_data = get_resp.json()
     assert get_data["feedback_id"] == feedback_id
 
-    updates_resp = client.get("/api/v1/feedback/model-updates")
+    updates_resp = api_client.get("/api/v1/feedback/model-updates")
     assert updates_resp.status_code == 200
     assert isinstance(updates_resp.json(), list)

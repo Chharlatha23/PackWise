@@ -25,16 +25,18 @@ Verifies:
 """
 
 import pytest
-from sqlalchemy.orm import Session
+from pathlib import Path
+from sqlalchemy import create_engine as _create_engine
+from sqlalchemy.orm import sessionmaker, Session
 from fastapi.testclient import TestClient
 
-from backend.app.main import app
-from backend.app.core.database import engine, Base, SessionLocal
-from backend.app.models.evidence import PackagingMaterial
-from backend.app.ingestion.pipeline import DataIngestionPipeline
+from app.main import app
+from app.core.database import Base, get_db
+from app.models.evidence import PackagingMaterial
+from app.ingestion.pipeline import DataIngestionPipeline
 
-from backend.app.schemas.packaging_request import PackagingRequest
-from backend.app.schemas.optimization import (
+from app.schemas.packaging_request import PackagingRequest
+from app.schemas.optimization import (
     OptimizationInputEnvelope,
     PackagingCandidate,
     PackageGeometry,
@@ -52,19 +54,37 @@ from scientific_engine.optimization.search_engine import (
     IntelligentInverseDesignSearchEngine,
     InverseDesignSearchResult
 )
-from backend.app.services.recommendation_service import RecommendationService
+from app.services.recommendation_service import RecommendationService
+
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+_BASE_DIR = str(_PROJECT_ROOT / "data" / "processed")
+_REFERENCE_DIR = str(_PROJECT_ROOT / "data" / "reference")
 
 
 @pytest.fixture(scope="module")
 def db_session():
-    Base.metadata.create_all(engine)
-    session = SessionLocal()
-    has_mats = session.query(PackagingMaterial).first() is not None
-    if not has_mats:
-        pipeline = DataIngestionPipeline(session)
-        pipeline.run()
+    """Isolated in-memory SQLite session; no live PostgreSQL connection required."""
+    _eng = _create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    Base.metadata.create_all(_eng)
+    TestSession = sessionmaker(autocommit=False, autoflush=False, bind=_eng)
+    session = TestSession()
+    pipeline = DataIngestionPipeline(session, base_dir=_BASE_DIR, reference_dir=_REFERENCE_DIR)
+    pipeline.run()
     yield session
     session.close()
+    Base.metadata.drop_all(_eng)
+    _eng.dispose()
+
+
+@pytest.fixture(scope="module")
+def api_client(db_session):
+    """TestClient with get_db overridden to use the in-memory SQLite session."""
+    def _override_get_db():
+        yield db_session
+    app.dependency_overrides[get_db] = _override_get_db
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.pop(get_db, None)
 
 
 def test_m10_implements_search_interface():
@@ -247,9 +267,8 @@ def test_recommendation_service_m10_execution(db_session: Session):
     assert rec_res.pareto_front.solver_metadata.algorithm_name == "ADAPTIVE_PARETO_FRONTIER_SEARCH_ENGINE"
 
 
-def test_api_recommendation_m10_endpoint(db_session: Session):
+def test_api_recommendation_m10_endpoint(api_client, db_session: Session):
     """Requirement 16: FastAPI POST /api/v1/recommend endpoint remains functional."""
-    client = TestClient(app)
     req_payload = {
         "commodity": "apple",
         "product_form": "fresh",
@@ -257,7 +276,7 @@ def test_api_recommendation_m10_endpoint(db_session: Session):
         "target_shelf_life_days": 14,
         "storage_type": "chilled"
     }
-    response = client.post("/api/v1/recommend", json=req_payload)
+    response = api_client.post("/api/v1/recommend", json=req_payload)
     assert response.status_code == 200
     data = response.json()
     assert data["total_candidates_evaluated"] > 0

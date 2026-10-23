@@ -39,6 +39,7 @@ from app.schemas.inference import (
     InferredProperty,
     PropertyInferenceProfile,
     InferenceResolutionLevel,
+    UncertaintyLevelEnum,
     InferenceWarning,
 )
 from app.schemas.physics import (
@@ -91,7 +92,7 @@ from app.schemas.optimization import (
     CounterfactualQuery
 )
 
-from backend.app.schemas.feedback import (
+from app.schemas.feedback import (
     ObservationOrigin,
     ValidationStatus,
     ComparisonStatus,
@@ -103,6 +104,81 @@ from backend.app.schemas.feedback import (
     MeasurementComparison,
     ModelUpdateCandidateSchema,
     FeedbackResponse
+)
+
+from app.schemas.ai_data import (
+    AIDataStatusEnum,
+    AIProvenanceRecord,
+    AIFeatureValue,
+    AIDataRecord,
+    from_food_evidence,
+    from_material_evidence,
+    from_inferred_profile,
+)
+
+from app.schemas.ai_target import (
+    AITargetEnum,
+    AITargetClassificationEnum,
+    AITargetCriteriaAssessment,
+    AITargetAuditResult,
+    AITargetPreparationRecord,
+    AITargetPreparationSet,
+    get_default_target_audit_registry,
+    prepare_targets_from_ai_data_record,
+)
+
+from app.schemas.ai_dataset import (
+    GenerationStoppingReasonEnum,
+    ThicknessDomainTypeEnum,
+    MaterialThicknessDomain,
+    MaterialThicknessBoundsManager,
+    AIPhysicsReferenceRecord,
+    DatasetQualityDiagnostics,
+    AIPhysicsDataset,
+    PhysicsReferenceDatasetGenerator,
+)
+
+from app.schemas.ai_surrogate import (
+    SurrogateModelFamilyEnum,
+    SurrogateAcceptanceStatusEnum,
+    SplitStrategyEnum,
+    TargetTransformationEnum,
+    SurrogateCompatibilityError,
+    FeatureSchemaDefinition,
+    TargetTransformationConfig,
+    SurrogateDatasetEligibilityResult,
+    DatasetSplitResult,
+    SubgroupMetrics,
+    HighErrorRegionAnalysis,
+    ConstraintBoundaryAnalysis,
+    RankingAgreementAnalysis,
+    ApplicabilitySignalAudit,
+    SurrogatePerformanceMetrics,
+    ComputationalCostMetrics,
+    SurrogatePhysicalValidityCheck,
+    ApplicabilityDiagnostic,
+    SurrogateModelManifest,
+    SurrogatePredictionResult,
+    SurrogateFeatureExtractor,
+    SurrogateTargetEligibilityEngine,
+    SurrogateDatasetSplitter,
+    SurrogateBenchmarker,
+    SurrogateApplicabilityEngine,
+    SurrogateModelRegistry,
+)
+
+from app.schemas.empirical_trial import (
+    EmpiricalTrialStatusEnum,
+    EmpiricalMeasurementUncertainty,
+    EmpiricalFoodSpecification,
+    EmpiricalPackagingSpecification,
+    EnvironmentTrajectoryPoint,
+    EmpiricalStorageEnvironment,
+    EmpiricalTimeSeriesObservation,
+    EmpiricalShelfLifeOutcome,
+    EmpiricalTrialProvenance,
+    EmpiricalTrialRecord,
+    EmpiricalTrialQualityGateEngine,
 )
 
 __all__ = [
@@ -129,6 +205,7 @@ __all__ = [
     "InferredProperty",
     "PropertyInferenceProfile",
     "InferenceResolutionLevel",
+    "UncertaintyLevelEnum",
     "InferenceWarning",
     "CalculationStatus",
     "ScientificTraceability",
@@ -179,11 +256,69 @@ __all__ = [
     "FeedbackSubmission",
     "MeasurementComparison",
     "ModelUpdateCandidateSchema",
-    "FeedbackResponse"
+    "FeedbackResponse",
+    "AIDataStatusEnum",
+    "AIProvenanceRecord",
+    "AIFeatureValue",
+    "AIDataRecord",
+    "from_food_evidence",
+    "from_material_evidence",
+    "from_inferred_profile",
+    "AITargetEnum",
+    "AITargetClassificationEnum",
+    "AITargetCriteriaAssessment",
+    "AITargetAuditResult",
+    "AITargetPreparationRecord",
+    "AITargetPreparationSet",
+    "get_default_target_audit_registry",
+    "prepare_targets_from_ai_data_record",
+    "GenerationStoppingReasonEnum",
+    "ThicknessDomainTypeEnum",
+    "MaterialThicknessDomain",
+    "MaterialThicknessBoundsManager",
+    "AIPhysicsReferenceRecord",
+    "DatasetQualityDiagnostics",
+    "AIPhysicsDataset",
+    "PhysicsReferenceDatasetGenerator",
+    "SurrogateModelFamilyEnum",
+    "SurrogateAcceptanceStatusEnum",
+    "SplitStrategyEnum",
+    "TargetTransformationEnum",
+    "SurrogateCompatibilityError",
+    "FeatureSchemaDefinition",
+    "TargetTransformationConfig",
+    "SurrogateDatasetEligibilityResult",
+    "DatasetSplitResult",
+    "SubgroupMetrics",
+    "SurrogatePerformanceMetrics",
+    "ComputationalCostMetrics",
+    "SurrogatePhysicalValidityCheck",
+    "ApplicabilityDiagnostic",
+    "SurrogateModelManifest",
+    "SurrogatePredictionResult",
+    "SurrogateFeatureExtractor",
+    "SurrogateTargetEligibilityEngine",
+    "SurrogateDatasetSplitter",
+    "SurrogateBenchmarker",
+    "SurrogateApplicabilityEngine",
+    "SurrogateModelRegistry",
+    "EmpiricalTrialStatusEnum",
+    "EmpiricalMeasurementUncertainty",
+    "EmpiricalFoodSpecification",
+    "EmpiricalPackagingSpecification",
+    "EnvironmentTrajectoryPoint",
+    "EmpiricalStorageEnvironment",
+    "EmpiricalTimeSeriesObservation",
+    "EmpiricalShelfLifeOutcome",
+    "EmpiricalTrialProvenance",
+    "EmpiricalTrialRecord",
+    "EmpiricalTrialQualityGateEngine",
 ]
 
 import sys
 for _k, _v in list(sys.modules.items()):
     if _k == "app" or _k.startswith("app."):
         sys.modules["backend." + _k] = _v
+
+
 

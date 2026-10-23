@@ -7,20 +7,14 @@ interface PackagingRequestFormProps {
 }
 
 export const PackagingRequestForm: React.FC<PackagingRequestFormProps> = ({ onSubmit, isLoading }) => {
-  const [formData, setFormData] = useState<Partial<PackagingRequest>>({
-    commodity: 'strawberry',
-    product_form: 'whole',
-    ripeness_stage: 'ripe',
-    target_shelf_life_days: 14,
-    storage_type: 'chilled',
-  });
+  const [formData, setFormData] = useState<Partial<PackagingRequest>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
-    let parsedValue: string | number = value;
+    let parsedValue: string | number | undefined = value;
 
     if (type === 'number') {
-      parsedValue = value === '' ? '' : Number(value);
+      parsedValue = value === '' ? undefined : Number(value);
     }
 
     setFormData((prev) => ({
@@ -34,117 +28,181 @@ export const PackagingRequestForm: React.FC<PackagingRequestFormProps> = ({ onSu
     onSubmit(formData as PackagingRequest);
   };
 
+  const getVarietySuggestions = () => {
+    const commodity = (formData.commodity || '').trim().toLowerCase();
+    if (commodity === 'apple') return ['Gala', 'Granny Smith'];
+    if (commodity === 'durian') return ['Monthong'];
+    if (commodity === 'salmon') return ['Atlantic'];
+    return [];
+  };
+
+  const varietySuggestions = getVarietySuggestions();
+
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-      <h2 className="text-xl font-bold text-gray-900 mb-6">New Recommendation Request</h2>
+    <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="bg-slate-800 px-6 py-4">
+        <h2 className="text-lg font-medium text-white">New Recommendation Request</h2>
+      </div>
       
-      <div className="space-y-6">
+      <div className="p-6 space-y-10">
         <section>
-          <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Required Parameters</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="mb-4 pb-2 border-b border-slate-100">
+            <h3 className="text-base font-semibold text-slate-800">A. Commodity Profile</h3>
+            <p className="text-sm text-slate-500">Core parameters defining the food product.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Commodity</label>
-              <input required type="text" name="commodity" value={formData.commodity || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" placeholder="e.g. strawberry" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Commodity <span className="text-red-500">*</span></label>
+              <input required type="text" list="commodity-suggestions" name="commodity" value={formData.commodity || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. strawberry" />
+              <datalist id="commodity-suggestions">
+                <option value="apple" />
+                <option value="durian" />
+                <option value="salmon" />
+                <option value="strawberry" />
+              </datalist>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Product Form</label>
-              <input required type="text" name="product_form" value={formData.product_form || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" placeholder="e.g. whole" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Variety</label>
+              <input type="text" list="variety-suggestions" name="variety" value={formData.variety || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. Camarosa" />
+              <datalist id="variety-suggestions">
+                {varietySuggestions.map(v => (
+                  <option key={v} value={v} />
+                ))}
+              </datalist>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Ripeness Stage</label>
-              <input required type="text" name="ripeness_stage" value={formData.ripeness_stage || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" placeholder="e.g. ripe" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Product Form <span className="text-red-500">*</span></label>
+              <select required name="product_form" value={formData.product_form || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-slate-900">
+                <option value="" disabled>Select product form...</option>
+                <option value="whole">Whole</option>
+                <option value="sliced">Sliced</option>
+                <option value="diced">Diced</option>
+                <option value="shredded">Shredded</option>
+                <option value="puree">Puree</option>
+                <option value="juice">Juice</option>
+                <option value="fillet">Fillet</option>
+                <option value="portioned">Portioned</option>
+                <option value="ground">Ground</option>
+                <option value="powder">Powder</option>
+                <option value="liquid">Liquid</option>
+                <option value="paste">Paste</option>
+              </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Target Shelf Life (days)</label>
-              <input required type="number" min="1" name="target_shelf_life_days" value={formData.target_shelf_life_days || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Ripeness Stage <span className="text-red-500">*</span></label>
+              <select required name="ripeness_stage" value={formData.ripeness_stage || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-slate-900">
+                <option value="" disabled>Select ripeness stage...</option>
+                <option value="immature">Immature</option>
+                <option value="mature_green">Mature Green</option>
+                <option value="breaker">Breaker</option>
+                <option value="turning">Turning</option>
+                <option value="ripe">Ripe</option>
+                <option value="fully_ripe">Fully Ripe</option>
+                <option value="overripe">Overripe</option>
+              </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Storage Type</label>
-              <select required name="storage_type" value={formData.storage_type || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md bg-white">
+              <label className="block text-sm font-medium text-slate-700 mb-1">Target Shelf Life (days) <span className="text-red-500">*</span></label>
+              <input required type="number" min="1" step="any" name="target_shelf_life_days" value={formData.target_shelf_life_days || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. 14" />
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div className="mb-4 pb-2 border-b border-slate-100">
+            <h3 className="text-base font-semibold text-slate-800">B. Storage & Logistics</h3>
+            <p className="text-sm text-slate-500">Environmental conditions during the supply chain.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Storage Type <span className="text-red-500">*</span></label>
+              <select required name="storage_type" value={formData.storage_type || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm bg-white text-slate-900">
+                <option value="" disabled>Select a type...</option>
                 <option value="chilled">Chilled</option>
                 <option value="ambient">Ambient</option>
                 <option value="frozen">Frozen</option>
               </select>
             </div>
-          </div>
-        </section>
-
-        <section>
-          <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Logistics & Environment (Optional)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Variety</label>
-              <input type="text" name="variety" value={formData.variety || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Storage Temperature (°C)</label>
+              <input type="number" step="any" name="storage_temperature_c" value={formData.storage_temperature_c ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. 2.0" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Transportation Type</label>
-              <input type="text" name="transportation_type" value={formData.transportation_type || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Relative Humidity (%)</label>
+              <input type="number" step="any" min="0" max="100" name="relative_humidity_percent" value={formData.relative_humidity_percent ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. 90" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Transportation Duration (days)</label>
-              <input type="number" step="0.1" min="0" name="transportation_duration_days" value={formData.transportation_duration_days || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Transportation Type</label>
+              <input type="text" name="transportation_type" value={formData.transportation_type || ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. Refrigerated truck" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Storage Temperature (°C)</label>
-              <input type="number" step="0.1" name="storage_temperature_c" value={formData.storage_temperature_c || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Relative Humidity (%)</label>
-              <input type="number" step="0.1" min="0" max="100" name="relative_humidity_percent" value={formData.relative_humidity_percent || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Transportation Duration (days)</label>
+              <input type="number" step="any" min="0" name="transportation_duration_days" value={formData.transportation_duration_days ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="e.g. 2" />
             </div>
           </div>
         </section>
 
         <section>
-          <div className="flex justify-between items-end border-b pb-2 mb-4">
-            <h3 className="text-lg font-semibold text-gray-800">Scientific Overrides (Optional)</h3>
-            <span className="text-sm text-gray-500">Leave blank to allow inference engine resolution</span>
+          <div className="mb-4 pb-2 border-b border-slate-100 flex flex-col sm:flex-row justify-between sm:items-baseline">
+            <h3 className="text-base font-semibold text-slate-800">C. Scientific Properties <span className="font-normal text-slate-500 text-sm ml-2">(Optional — leave blank to allow evidence-based inference)</span></h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <p className="text-xs text-amber-800 bg-amber-50 px-3 py-2 rounded-md border border-amber-200 mb-4 inline-block shadow-sm">
+            Unknown scientific properties are resolved by the backend inference engine when sufficient evidence exists.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Moisture (%)</label>
-              <input type="number" step="0.1" min="0" max="100" name="moisture_percent" value={formData.moisture_percent || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Moisture (%)</label>
+              <input type="number" step="any" min="0" max="100" name="moisture_percent" value={formData.moisture_percent ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Blank to infer" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Fat (%)</label>
-              <input type="number" step="0.1" min="0" max="100" name="fat_percent" value={formData.fat_percent || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Fat (%)</label>
+              <input type="number" step="any" min="0" max="100" name="fat_percent" value={formData.fat_percent ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Blank to infer" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">pH</label>
-              <input type="number" step="0.1" min="0" max="14" name="ph" value={formData.ph || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">pH</label>
+              <input type="number" step="any" min="0" max="14" name="ph" value={formData.ph ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Blank to infer" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Respiration Rate</label>
-              <input type="number" step="0.1" min="0" name="respiration_rate" value={formData.respiration_rate || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Respiration Rate (mg/kg·h)</label>
+              <input type="number" step="any" min="0" name="respiration_rate" value={formData.respiration_rate ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Blank to infer" />
             </div>
           </div>
         </section>
 
         <section>
-          <h3 className="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Package Geometry (Optional)</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mb-4 pb-2 border-b border-slate-100">
+            <h3 className="text-base font-semibold text-slate-800">D. Package Geometry</h3>
+            <p className="text-sm text-slate-500">Used by the packaging requirement and gas-exchange calculations.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Surface Area (m²)</label>
-              <input type="number" step="0.01" min="0" name="package_surface_area_m2" value={formData.package_surface_area_m2 || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Surface Area (m²)</label>
+              <input type="number" step="any" min="0" name="package_surface_area_m2" value={formData.package_surface_area_m2 ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Optional" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Headspace Volume (cm³)</label>
-              <input type="number" step="0.1" min="0" name="package_headspace_volume_cm3" value={formData.package_headspace_volume_cm3 || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Headspace Volume (cm³)</label>
+              <input type="number" step="any" min="0" name="package_headspace_volume_cm3" value={formData.package_headspace_volume_cm3 ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Optional" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Product Mass (kg)</label>
-              <input type="number" step="0.01" min="0" name="product_mass_kg" value={formData.product_mass_kg || ''} onChange={handleChange} className="w-full px-3 py-2 border rounded-md" />
+              <label className="block text-sm font-medium text-slate-700 mb-1">Product Mass (kg)</label>
+              <input type="number" step="any" min="0" name="product_mass_kg" value={formData.product_mass_kg ?? ''} onChange={handleChange} className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-slate-900" placeholder="Optional" />
             </div>
           </div>
         </section>
 
-        <div className="pt-4 flex justify-end">
+        <div className="pt-6 flex justify-end border-t border-slate-100">
           <button 
             type="submit" 
             disabled={isLoading}
-            className="px-6 py-2 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 px-6 py-2.5 bg-blue-700 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-800 disabled:opacity-70 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            {isLoading ? 'Running Scientific Pipeline...' : 'Generate Recommendation'}
+            {isLoading && (
+              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            )}
+            {isLoading ? 'Analyzing Packaging Requirements...' : 'Generate Packaging Recommendation'}
           </button>
         </div>
       </div>

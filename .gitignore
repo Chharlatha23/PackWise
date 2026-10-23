@@ -39,3 +39,6 @@ htmlcov/
 scratch/
 scratch_test*.py
 *.bak
+*.db
+node_modules/
+dist/
