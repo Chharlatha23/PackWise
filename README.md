@@ -97,7 +97,7 @@ The system operates strictly according to the frozen scientific hierarchy:
 | **Backend Core** | Python 3.12+, FastAPI, Pydantic v2, SQLAlchemy 2.0 |
 | **Scientific & ML Libraries** | NumPy, SciPy, scikit-learn |
 | **Database** | PostgreSQL (schema & migrations) / SQLite (local fallback) |
-| **Testing** | pytest (492 passing unit and integration tests), httpx |
+| **Testing** | pytest (490 passed in backend/tests/, 494 passed across all suites; 0 failures), httpx |
 | **Frontend UI** | Vite, React 19, TypeScript, Tailwind CSS |
 
 ---
