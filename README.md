@@ -1,4 +1,4 @@
-# PackWise — AI Food Packaging Optimizer
+# PackWise — Evidence-Driven Inverse-Design Food Packaging Recommendation System
 
 An **evidence-driven inverse-design decision-support system** for food packaging material recommendation based on physics-informed kinetics, multi-objective optimization, and traceable scientific evidence.
 

@@ -10,17 +10,25 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ onNewFeedb
   const [feedbackList, setFeedbackList] = useState<FeedbackResponse[]>([]);
   const [updateCandidates, setUpdateCandidates] = useState<ModelUpdateCandidate[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'trials' | 'candidates'>('trials');
 
   const loadData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const [fList, uList] = await Promise.all([
-        fetchAllFeedback().catch(() => []),
-        fetchModelUpdates().catch(() => [])
+        fetchAllFeedback(),
+        fetchModelUpdates()
       ]);
       setFeedbackList(fList);
       setUpdateCandidates(uList);
+    } catch (err: any) {
+      console.error('Failed to load feedback records or model update candidates:', err);
+      setError(
+        err.message ||
+        'Unable to retrieve packaging feedback and model audit ledger from backend API.'
+      );
     } finally {
       setLoading(false);
     }
@@ -84,6 +92,21 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ onNewFeedb
       <div className="p-6">
         {loading ? (
           <div className="text-center py-8 text-sm text-slate-500">Loading trial observations and model candidates...</div>
+        ) : error ? (
+          <div className="p-6 rounded-xl border border-red-200 bg-red-50 text-center space-y-3">
+            <div className="text-sm font-semibold text-red-800">
+              Failed to load feedback records or model update candidates
+            </div>
+            <p className="text-xs text-red-600 max-w-lg mx-auto">
+              {error}
+            </p>
+            <button
+              onClick={loadData}
+              className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+            >
+              Retry Request
+            </button>
+          </div>
         ) : activeTab === 'trials' ? (
           feedbackList.length === 0 ? (
             <div className="text-center py-8 text-slate-500 text-sm">

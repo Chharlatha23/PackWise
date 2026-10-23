@@ -70,8 +70,8 @@ function App() {
                 Scientific Inverse-Design
               </span>
             </div>
-            <p className="text-sm text-slate-500 mt-1">
-              Evidence-driven decision support system for food packaging material recommendation
+            <p className="text-sm text-slate-500 mt-1 font-medium">
+              PackWise — Evidence-Driven Inverse-Design Food Packaging Recommendation System
             </p>
           </div>
           

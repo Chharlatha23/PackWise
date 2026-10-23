@@ -1,5 +1,5 @@
 """
-Recommendation Service for AI-Food-Packaging-Optimizer.
+Recommendation Service for PackWise.
 
 Orchestrates the end-to-end scientific packaging recommendation pipeline:
 USER INPUT

@@ -15,7 +15,7 @@ router = APIRouter()
 @router.get("/health")
 def health_check() -> dict:
     """Returns a simple status response confirming the API is running."""
-    return {"status": "ok", "service": "FoodPack AI API"}
+    return {"status": "ok", "service": "PackWise API"}
 
 
 @router.post(

@@ -14,4 +14,4 @@ def test_health_response_body() -> None:
     response = client.get("/health")
     body = response.json()
     assert body["status"] == "ok"
-    assert "service" in body
+    assert body["service"] == "PackWise API"
