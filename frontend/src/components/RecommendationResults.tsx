@@ -48,7 +48,7 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
   return (
     <div className="space-y-8">
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <p className="text-sm text-slate-500 font-medium">Candidates Evaluated</p>
           <p className="text-3xl font-semibold text-slate-900 mt-2">{total_candidates_evaluated}</p>
@@ -60,6 +60,10 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
         <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <p className="text-sm text-slate-500 font-medium">Infeasible</p>
           <p className="text-3xl font-semibold text-red-600 mt-2">{infeasible_candidates_count}</p>
+        </div>
+        <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <p className="text-sm text-slate-500 font-medium">Unknown / Incomplete</p>
+          <p className="text-3xl font-semibold text-amber-600 mt-2">{unknown_candidates_count}</p>
         </div>
         <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
           <p className="text-sm text-slate-500 font-medium">Pareto Candidates</p>
@@ -86,145 +90,383 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Inference Summary */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Property Inference</h3>
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h3 className="text-lg font-semibold text-slate-800">Property Inference</h3>
+              <p className="text-xs text-slate-500">Scenario properties resolved from direct input or scientific evidence</p>
+            </div>
+            {inference_profile?.overall_confidence !== undefined && inference_profile?.overall_confidence !== null && (
+              <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200" title="Scientific Evidence Confidence Score">
+                Conf: {(inference_profile.overall_confidence * 100).toFixed(0)}%
+              </span>
+            )}
+          </div>
+
+          {/* Scenario & Context Matrix: Commodity, Variety, Product Form, Ripeness Stage, Storage Type, Storage Temp, RH */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 mb-4 bg-slate-50 rounded-lg border border-slate-200 text-xs">
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Commodity</span>
+              <span className="font-bold text-slate-800 capitalize">
+                {inference_profile?.commodity || <span className="text-amber-700 font-mono">UNKNOWN</span>}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Variety</span>
+              <span className="font-bold text-slate-800 capitalize">
+                {inference_profile?.variety || <span className="text-slate-500 italic">None Specified</span>}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Product Form</span>
+              <span className="font-bold text-slate-800 capitalize">
+                {inference_profile?.product_form || <span className="text-amber-700 font-mono">UNKNOWN</span>}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Ripeness Stage</span>
+              <span className="font-bold text-slate-800 capitalize">
+                {inference_profile?.ripeness_stage || <span className="text-amber-700 font-mono">UNKNOWN</span>}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Storage Type</span>
+              <span className="font-bold text-slate-800 capitalize">
+                {inference_profile?.storage_type || <span className="text-amber-700 font-mono">UNKNOWN</span>}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Storage Temp</span>
+              <span className="font-bold text-slate-800">
+                {inference_profile?.storage_temperature_c != null ? (
+                  `${inference_profile.storage_temperature_c}°C`
+                ) : (
+                  <span className="text-amber-700 font-mono">UNKNOWN</span>
+                )}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Relative Humidity</span>
+              <span className="font-bold text-slate-800">
+                {inference_profile?.relative_humidity_percent != null ? (
+                  `${inference_profile.relative_humidity_percent}%`
+                ) : (
+                  <span className="text-amber-700 font-mono">UNKNOWN</span>
+                )}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-400 block font-medium text-[10px] uppercase">Overall Confidence</span>
+              <span className="font-bold text-blue-700">
+                {inference_profile?.overall_confidence != null ? (
+                  `${(inference_profile.overall_confidence * 100).toFixed(0)}%`
+                ) : (
+                  <span className="text-amber-700 font-mono">UNKNOWN</span>
+                )}
+              </span>
+            </div>
+          </div>
+
           <div className="space-y-3">
-            {inference_profile && Object.keys(inference_profile).length > 0 ? (
-              Object.entries(inference_profile).map(([key, data]: [string, any]) => (
-                <div key={key} className="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                  <span className="text-sm font-medium text-slate-700 capitalize">{key.replace(/_/g, ' ')}</span>
-                  <div className="text-right">
-                    <div className="text-sm font-semibold text-slate-900">{data?.value !== null && data?.value !== undefined ? data.value : 'UNKNOWN'}</div>
-                    <div className="text-xs text-slate-500">{data?.epistemic_status || 'Evidence insufficient'}</div>
+            {inference_profile?.properties && Object.keys(inference_profile.properties).length > 0 ? (
+              Object.entries(inference_profile.properties).map(([key, prop]: [string, any]) => {
+                const isKnown = prop?.value !== null && prop?.value !== undefined;
+                const isUserSupplied = prop?.resolution_level === 'user_supplied';
+                const statusBadge = isUserSupplied
+                  ? { text: 'User Provided', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' }
+                  : isKnown
+                  ? { text: prop?.resolution_level?.replace(/_/g, ' ') || 'Inferred', color: 'bg-blue-50 text-blue-700 border-blue-200' }
+                  : { text: 'UNKNOWN (No Evidence)', color: 'bg-amber-50 text-amber-800 border-amber-200' };
+
+                const citation = prop?.citations && prop.citations.length > 0 ? prop.citations[0] : null;
+
+                return (
+                  <div key={key} className="py-2.5 border-b border-slate-100 last:border-0">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <span className="text-sm font-semibold text-slate-800 capitalize">{key.replace(/_/g, ' ')}</span>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <span className={`text-[9px] uppercase font-bold px-1.5 py-0.5 rounded border ${statusBadge.color}`}>
+                            {statusBadge.text}
+                          </span>
+                          {prop?.uncertainty_range && (
+                            <span className="text-[10px] text-slate-500 font-mono">
+                              Range: [{prop.uncertainty_range[0]} – {prop.uncertainty_range[1]} {prop.unit || ''}]
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="text-right">
+                        <div className={`text-sm font-bold ${isKnown ? 'text-slate-900' : 'text-amber-700 font-mono'}`}>
+                          {isKnown ? `${prop.value} ${prop.unit || ''}` : 'UNKNOWN'}
+                        </div>
+                        {prop?.confidence != null && (
+                          <div className="text-[10px] text-slate-500">
+                            Confidence: {(prop.confidence * 100).toFixed(0)}%
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {citation && (
+                      <div className="mt-1 text-[10px] text-slate-500 truncate max-w-full" title={citation}>
+                        Ref: {citation}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
-              <div className="text-sm text-slate-500">No properties inferred.</div>
+              <div className="text-sm text-slate-500">No properties evaluated.</div>
             )}
           </div>
         </div>
 
         {/* Requirement Summary */}
         <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Scientific Requirements</h3>
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h3 className="text-lg font-semibold text-slate-800">Scientific Requirements</h3>
+              <p className="text-xs text-slate-500">Derived shelf-life and gas/moisture transmission thresholds</p>
+            </div>
+            <span className={`text-[11px] font-semibold px-2 py-0.5 rounded border ${
+              requirement_envelope?.overall_status === 'CALCULATED'
+                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                : requirement_envelope?.overall_status === 'PARTIALLY_CALCULATED'
+                ? 'bg-blue-50 text-blue-700 border-blue-200'
+                : 'bg-amber-50 text-amber-800 border-amber-200'
+            }`}>
+              {requirement_envelope?.overall_status || 'UNKNOWN'}
+            </span>
+          </div>
+
           <div className="space-y-3">
-            {requirement_envelope && Object.keys(requirement_envelope).length > 0 ? (
-              Object.entries(requirement_envelope).map(([reqKey, reqData]: [string, any]) => {
-                let statusText = 'UNKNOWN';
-                let statusColor = 'text-amber-700 bg-amber-50 border-amber-200';
-                
-                if (reqData && typeof reqData === 'object' && reqData.status) {
-                  statusText = reqData.status;
-                  if (statusText === 'CALCULATED') statusColor = 'text-emerald-700 bg-emerald-50 border-emerald-200';
-                  if (statusText === 'PARTIALLY CALCULATED') statusColor = 'text-blue-700 bg-blue-50 border-blue-200';
-                } else if (reqData) {
-                  statusText = 'CALCULATED';
-                  statusColor = 'text-emerald-700 bg-emerald-50 border-emerald-200';
-                }
-                
-                return (
-                  <div key={reqKey} className="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span className="text-sm font-medium text-slate-700 capitalize">{reqKey.replace(/_/g, ' ')}</span>
-                    <span className={`text-[10px] uppercase font-semibold px-2 py-1 rounded border ${statusColor}`}>
-                      {statusText}
-                    </span>
+            {/* Target Gas Exchange (OTR / CO2TR) */}
+            <div className="py-2.5 border-b border-slate-100">
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="text-sm font-semibold text-slate-800">Gas Exchange (EMAP OTR/CO₂TR)</span>
+                  <div className="text-[10px] text-slate-500 mt-0.5">
+                    Target O₂: {requirement_envelope?.gas_requirements?.target_o2_percent ?? 3}% | Target CO₂: {requirement_envelope?.gas_requirements?.target_co2_percent ?? 5}%
                   </div>
-                )
-              })
-            ) : (
-              <div className="text-sm text-slate-500">No requirements calculated.</div>
-            )}
+                </div>
+                <div className="text-right">
+                  <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                    requirement_envelope?.gas_requirements?.status === 'CALCULATED'
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      : 'bg-amber-50 text-amber-800 border-amber-200'
+                  }`}>
+                    {requirement_envelope?.gas_requirements?.status || 'UNKNOWN'}
+                  </span>
+                  <div className="text-xs font-mono font-semibold text-slate-900 mt-1">
+                    {requirement_envelope?.gas_requirements?.required_otr_per_area?.value != null
+                      ? `${requirement_envelope.gas_requirements.required_otr_per_area.value} cc/m²·day`
+                      : 'OTR: UNKNOWN'}
+                  </div>
+                </div>
+              </div>
+              {requirement_envelope?.gas_requirements?.warnings?.[0] && (
+                <div className="mt-1 text-[10px] text-amber-700 italic">
+                  Note: {requirement_envelope.gas_requirements.warnings[0]}
+                </div>
+              )}
+            </div>
+
+            {/* Moisture Transfer (WVTR) */}
+            <div className="py-2.5 border-b border-slate-100">
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="text-sm font-semibold text-slate-800">Moisture Barrier (WVTR)</span>
+                  <div className="text-[10px] text-slate-500 mt-0.5">
+                    Δp_w: {requirement_envelope?.moisture_requirements?.water_vapor_pressure_gradient_kpa?.value != null
+                      ? `${requirement_envelope.moisture_requirements.water_vapor_pressure_gradient_kpa.value} kPa`
+                      : 'Equilibrium undetermined'}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className={`text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border ${
+                    requirement_envelope?.moisture_requirements?.status === 'CALCULATED'
+                      ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      : requirement_envelope?.moisture_requirements?.status === 'PARTIALLY_CALCULATED'
+                      ? 'bg-blue-50 text-blue-700 border-blue-200'
+                      : 'bg-amber-50 text-amber-800 border-amber-200'
+                  }`}>
+                    {requirement_envelope?.moisture_requirements?.status || 'UNKNOWN'}
+                  </span>
+                  <div className="text-xs font-mono font-semibold text-slate-900 mt-1">
+                    {requirement_envelope?.moisture_requirements?.required_wvtr_per_area?.value != null
+                      ? `${requirement_envelope.moisture_requirements.required_wvtr_per_area.value} g/m²·day`
+                      : 'WVTR: UNKNOWN'}
+                  </div>
+                </div>
+              </div>
+              {requirement_envelope?.moisture_requirements?.warnings?.[0] && (
+                <div className="mt-1 text-[10px] text-amber-700 italic">
+                  Note: {requirement_envelope.moisture_requirements.warnings[0]}
+                </div>
+              )}
+            </div>
+
+            {/* Microbial & Respiration Deterioration Profile */}
+            <div className="py-2.5">
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="text-sm font-semibold text-slate-800">Primary Deterioration Vulnerabilities</span>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {requirement_envelope?.deterioration_profile?.primary_vulnerabilities?.map((v: string) => (
+                      <span key={v} className="text-[10px] px-2 py-0.5 bg-slate-100 text-slate-700 rounded-md font-medium capitalize">
+                        {v.replace(/_/g, ' ')}
+                      </span>
+                    )) || <span className="text-xs text-slate-500">None identified</span>}
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded border bg-slate-100 text-slate-700 border-slate-200">
+                    Target: {requirement_envelope?.target_shelf_life_days || '—'} days
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Pareto Candidates / Empty State */}
+      {/* Pareto Candidates / Evaluated Candidates Section */}
       <div>
-        <h3 className="text-xl font-bold text-slate-900 mb-4">
-          {hasPareto ? 'Pareto Candidates' : 'Provisional Alternatives — Not Verified as Feasible'}
-        </h3>
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4">
+          <div>
+            <h3 className="text-xl font-bold text-slate-900">
+              {hasPareto ? 'Pareto-Optimal Candidate Materials' : 'Evaluated Material Candidate Status & Scientific Audit'}
+            </h3>
+            <p className="text-xs text-slate-500 mt-0.5">
+              {hasPareto
+                ? 'Non-dominated candidate materials passing all hard constraints and verified by exact physics.'
+                : 'Exact-physics constraint status for all candidate materials evaluated from the material evidence database.'}
+            </p>
+          </div>
+
+          {!hasPareto && candidate_summaries && candidate_summaries.length > 0 && (
+            <div className="flex items-center gap-1.5 text-xs">
+              <span className="text-slate-500 font-medium mr-1">Display:</span>
+              <span className="px-2 py-1 rounded bg-slate-100 text-slate-700 font-semibold border border-slate-200">
+                All {candidate_summaries.length} Candidates
+              </span>
+            </div>
+          )}
+        </div>
+
         {!hasPareto ? (
           (candidate_summaries && candidate_summaries.length > 0) ? (
             <div className="space-y-6">
               <div className="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
                 <div className="flex">
-                  <div className="ml-3">
-                    <h3 className="text-sm font-medium text-amber-800">
-                      No candidate was verified as strictly FEASIBLE.
-                    </h3>
-                    <div className="mt-2 text-sm text-amber-700">
+                  <div className="ml-1">
+                    <h4 className="text-sm font-bold text-amber-900">
+                      Zero Candidates Verified as Strictly FEASIBLE
+                    </h4>
+                    <div className="mt-1.5 text-xs text-amber-800 space-y-1">
                       <p>
-                        The following candidates are alternatives for further evaluation, not confirmed suitable packages. 
+                        The inverse-design search engine evaluated <strong>{total_candidates_evaluated}</strong> material candidates from the database.
+                        None could be confirmed as feasible because required barrier properties (such as respiration O₂ consumption or water vapor transmission rate) are unmeasured or indeterminate under the current scenario inputs.
+                      </p>
+                      <p className="font-medium">
                         {isSurrogatePrioritized 
-                          ? " They are ordered by the M11 surrogate search priority based on domain applicability and target performance."
-                          : " Candidates are listed in the order returned by the search engine; surrogate prioritization was not applied."}
-                        <br />Please review the exact constraint failures or unknown scientific boundaries.
+                          ? "Materials are prioritized using M11 domain applicability and shelf-life objectives. Exact physics remains sovereign."
+                          : "Materials are listed in deterministic database evaluation order."}
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {candidate_summaries.slice(0, 3).map((summary: any) => {
-                  const statusColor = summary.constraint_status === 'INFEASIBLE' 
+                {candidate_summaries.map((summary: any) => {
+                  const statusColor = summary.constraint_status === 'FEASIBLE'
+                    ? 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                    : summary.constraint_status === 'INFEASIBLE' 
                     ? 'bg-red-100 text-red-800 border-red-200' 
                     : 'bg-amber-100 text-amber-800 border-amber-200';
+
+                  const badgeText = summary.constraint_status === 'FEASIBLE'
+                    ? 'Verified Feasible'
+                    : summary.constraint_status === 'INFEASIBLE'
+                    ? 'Infeasible'
+                    : 'Unverified / Indeterminate';
                   
+                  // Extract individual constraint evaluations
+                  const evals = summary.evaluation_details?.evaluations || [];
+
                   return (
-                    <div key={summary.candidate_id} className="bg-slate-50 opacity-95 rounded-xl shadow-sm border border-dashed border-amber-300 overflow-hidden flex flex-col h-full relative">
-                      {/* Unverified overlay badge */}
-                      <div className="absolute top-0 right-0 bg-amber-500 text-white text-[9px] font-black tracking-widest px-2 py-1 uppercase shadow-sm z-10 rounded-bl-lg border-b border-l border-amber-600">
-                        Unverified
+                    <div key={summary.candidate_id} className="bg-slate-50 opacity-95 rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-full relative">
+                      {/* Status header badge */}
+                      <div className={`absolute top-0 right-0 text-white text-[9px] font-black tracking-widest px-2.5 py-1 uppercase shadow-xs z-10 rounded-bl-lg border-b border-l ${
+                        summary.constraint_status === 'FEASIBLE'
+                          ? 'bg-emerald-600 border-emerald-700'
+                          : summary.constraint_status === 'INFEASIBLE'
+                          ? 'bg-red-600 border-red-700'
+                          : 'bg-amber-500 border-amber-600'
+                      }`}>
+                        {badgeText}
                       </div>
                       
-                      <div className="p-5 border-b border-amber-200 bg-amber-50/70">
-                        <div className="flex justify-between items-start gap-2 mb-2 pr-12">
-                          <h3 className="text-sm font-bold text-slate-800 leading-snug">{summary.material_name}</h3>
+                      <div className="p-5 border-b border-slate-200 bg-white">
+                        <div className="flex justify-between items-start gap-2 mb-2 pr-24">
+                          <h4 className="text-sm font-bold text-slate-800 leading-snug">{summary.material_name}</h4>
                         </div>
                         <div className="flex items-center gap-2">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border ${statusColor}`}>
                             {summary.constraint_status}
                           </span>
                           <span className="text-xs font-semibold text-slate-500">
-                            {summary.total_thickness_um ? `${summary.total_thickness_um} µm` : 'Unknown thick.'}
+                            {summary.total_thickness_um ? `${summary.total_thickness_um} µm` : 'Thickness unrecorded'}
                           </span>
                         </div>
                       </div>
                       
                       <div className="p-5 flex-1 flex flex-col text-sm">
-                        <div className="mb-4 text-xs bg-white p-2 rounded border border-slate-200">
-                          {summary.applicability_state && (
+                        {summary.applicability_state && (
+                          <div className="mb-3 text-xs bg-white p-2.5 rounded-lg border border-slate-200">
                             <div className="flex justify-between mb-1">
                               <span className="font-medium text-slate-500">Surrogate Domain:</span> 
                               <span className="font-semibold text-slate-700">{summary.applicability_state.replace(/_/g, ' ')}</span>
                             </div>
-                          )}
-                          {summary.predicted_shelf_life != null && (
-                            <div className="flex justify-between">
-                              <span className="font-medium text-slate-500">Predicted Shelf Life:</span> 
-                              <span className="font-semibold text-slate-700">{summary.predicted_shelf_life.toFixed(1)} days</span>
-                            </div>
-                          )}
-                        </div>
-
-                        <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Constraint Profile</h4>
-                        <div className="bg-white p-3 rounded-lg border border-slate-100 space-y-2 text-xs">
-                          {summary.evaluation_details && Object.entries(summary.evaluation_details).map(([k, v]: [string, any]) => {
-                            if (k === 'overall_feasibility_status' || k === 'all_hard_constraints_satisfied' || k === 'overall_status') return null;
-                            if (typeof v !== 'object' || !v || !v.status) return null;
-                            
-                            let color = 'text-slate-600';
-                            if (v.status === 'INFEASIBLE') color = 'text-red-600 font-bold';
-                            if (v.status === 'UNKNOWN') color = 'text-amber-600 font-bold';
-                            if (v.status === 'FEASIBLE') color = 'text-emerald-600';
-
-                            return (
-                              <div key={k} className="flex justify-between items-center border-b border-slate-50 last:border-0 pb-1 last:pb-0">
-                                <span className="capitalize text-slate-600 truncate mr-2" title={k.replace(/_/g, ' ')}>{k.replace(/_/g, ' ')}</span>
-                                <span className={`${color} text-[10px] uppercase tracking-wide`}>{v.status}</span>
+                            {summary.predicted_shelf_life != null && (
+                              <div className="flex justify-between">
+                                <span className="font-medium text-slate-500">Predicted Shelf Life:</span> 
+                                <span className="font-semibold text-slate-700">{summary.predicted_shelf_life.toFixed(1)} days</span>
                               </div>
-                            );
-                          })}
+                            )}
+                          </div>
+                        )}
+
+                        <h5 className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Hard Barrier Constraints</h5>
+                        <div className="bg-white p-3 rounded-lg border border-slate-100 space-y-2 text-xs flex-1">
+                          {evals.length > 0 ? (
+                            evals.map((ev: any) => {
+                              let color = 'text-slate-600';
+                              if (ev.status === 'INFEASIBLE') color = 'text-red-600 font-bold';
+                              if (ev.status === 'UNKNOWN') color = 'text-amber-600 font-bold';
+                              if (ev.status === 'FEASIBLE') color = 'text-emerald-600 font-bold';
+
+                              return (
+                                <div key={ev.constraint_type} className="border-b border-slate-50 last:border-0 pb-1.5 last:pb-0">
+                                  <div className="flex justify-between items-center">
+                                    <span className="capitalize font-medium text-slate-700 truncate mr-2" title={ev.constraint_type}>
+                                      {ev.constraint_type.replace(/_/g, ' ')}
+                                    </span>
+                                    <span className={`${color} text-[10px] uppercase tracking-wide`}>{ev.status}</span>
+                                  </div>
+                                  {ev.reason && (
+                                    <div className="text-[10px] text-slate-400 mt-0.5 line-clamp-1" title={ev.reason}>
+                                      {ev.reason}
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })
+                          ) : (
+                            <div className="text-slate-400 text-xs italic">No individual constraint records.</div>
+                          )}
                         </div>
 
                         {/* Action buttons */}
@@ -232,7 +474,7 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                           {onExplainCandidate && summary.explainability && (
                             <button
                               onClick={() => onExplainCandidate(summary.explainability)}
-                              className="flex-1 py-1.5 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-lg border border-blue-200 transition-colors"
+                              className="flex-1 py-1.5 px-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-semibold rounded-lg border border-blue-200 transition-colors cursor-pointer"
                             >
                               Constraint Audit
                             </button>
@@ -240,7 +482,7 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
                           {onRecordFeedback && (
                             <button
                               onClick={() => onRecordFeedback(summary.candidate_id, summary.material_name)}
-                              className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+                              className="py-1.5 px-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
                             >
                               Trial Feedback
                             </button>
@@ -255,15 +497,15 @@ export const RecommendationResults: React.FC<RecommendationResultsProps> = ({
           ) : (
             total_candidates_evaluated > 0 ? (
               <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm text-center">
-                <h4 className="text-lg font-bold text-slate-800 mb-3">Ranking Not Scientifically Supportable</h4>
-                <p className="text-slate-600 mb-8 max-w-2xl mx-auto text-sm leading-relaxed">
-                  No candidate can be meaningfully ranked because essential information or comparable evaluation results are unavailable.
+                <h4 className="text-lg font-bold text-slate-800 mb-3">Evaluation Indeterminate</h4>
+                <p className="text-slate-600 mb-4 max-w-2xl mx-auto text-sm leading-relaxed">
+                  No candidate could be confirmed as feasible.
                 </p>
               </div>
             ) : (
-               <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm text-center text-slate-600">
-                  No feasible candidates found for these requirements.
-               </div>
+              <div className="bg-white p-8 rounded-xl border border-slate-200 shadow-sm text-center text-slate-600">
+                No candidates evaluated from the database.
+              </div>
             )
           )
         ) : (

@@ -12,7 +12,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import router
+from app.api.auth_routes import auth_router
 from app.core.config import APP_DESCRIPTION, APP_TITLE, APP_VERSION, settings
+from app.core.database import engine, Base
+import app.models  # Ensure all SQLAlchemy models are registered
+
+# Ensure tables exist (graceful fallback if schema is already managed by MySQL / Alembic)
+try:
+    Base.metadata.create_all(bind=engine)
+except Exception as e:
+    # Dialect specific warning or existing schema
+    pass
 
 app = FastAPI(
     title=APP_TITLE,
@@ -42,3 +52,5 @@ def root():
     }
 
 app.include_router(router)
+app.include_router(auth_router)
+

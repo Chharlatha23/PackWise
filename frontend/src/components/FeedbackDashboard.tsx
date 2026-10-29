@@ -93,18 +93,18 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ onNewFeedb
         {loading ? (
           <div className="text-center py-8 text-sm text-slate-500">Loading trial observations and model candidates...</div>
         ) : error ? (
-          <div className="p-6 rounded-xl border border-red-200 bg-red-50 text-center space-y-3">
-            <div className="text-sm font-semibold text-red-800">
-              Failed to load feedback records or model update candidates
+          <div className="p-6 rounded-xl border border-amber-200 bg-amber-50/80 text-center space-y-2">
+            <div className="text-xs font-semibold text-amber-900">
+              Notice: Unable to retrieve trial records
             </div>
-            <p className="text-xs text-red-600 max-w-lg mx-auto">
+            <p className="text-xs text-amber-700 max-w-lg mx-auto">
               {error}
             </p>
             <button
               onClick={loadData}
-              className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+              className="px-3 py-1 bg-white border border-amber-300 text-amber-900 text-xs font-medium rounded-lg hover:bg-amber-100 transition-colors cursor-pointer"
             >
-              Retry Request
+              Retry
             </button>
           </div>
         ) : activeTab === 'trials' ? (
@@ -143,9 +143,9 @@ export const FeedbackDashboard: React.FC<FeedbackDashboardProps> = ({ onNewFeedb
                           <div className="text-[11px] font-mono text-slate-600 mt-1">
                             Obs: {c.observed_value !== undefined ? c.observed_value : '—'} {c.unit}
                           </div>
-                          {c.discrepancy_residual !== undefined && (
+                          {c.discrepancy_residual != null && (
                             <div className="text-[11px] font-mono font-semibold text-slate-800">
-                              Res: {c.discrepancy_residual > 0 ? `+${c.discrepancy_residual.toFixed(2)}` : c.discrepancy_residual.toFixed(2)}
+                              Res: {c.discrepancy_residual > 0 ? `+${Number(c.discrepancy_residual).toFixed(2)}` : Number(c.discrepancy_residual).toFixed(2)}
                             </div>
                           )}
                         </div>

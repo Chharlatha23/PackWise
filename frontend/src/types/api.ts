@@ -182,3 +182,14 @@ export interface FeedbackResponse {
   model_update_candidates: ModelUpdateCandidate[];
   created_at: string;
 }
+
+export interface UserProfile {
+  id: number;
+  email: string;
+  name?: string;
+  picture?: string;
+  is_active: boolean;
+  created_at?: string;
+  last_login?: string;
+}
+

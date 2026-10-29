@@ -1,9 +1,9 @@
 import pytest
-import httpx
 from pathlib import Path
 from sqlalchemy import create_engine as _create_engine
 from sqlalchemy.pool import StaticPool
 from sqlalchemy.orm import sessionmaker, Session
+from fastapi.testclient import TestClient
 
 from app.main import app
 from app.core.database import Base, get_db
@@ -152,3 +152,123 @@ def test_api_recommendation_endpoint(api_client, db_session: Session):
     assert "pareto_front" in data
     assert "total_candidates_evaluated" in data
     assert data["total_candidates_evaluated"] > 0
+
+
+def test_scenario_dynamics_and_property_preservation(api_client, db_session: Session):
+    """
+    Phase 6 Test 1, 2, 3, 4:
+    Verify that changing commodity, temperature, and RH updates the evaluation inputs,
+    and user-provided properties are strictly preserved without being overwritten by UNKNOWN.
+    """
+    user_payload = {
+        "commodity": "strawberry",
+        "variety": "Camarosa",
+        "product_form": "whole",
+        "ripeness_stage": "ripe",
+        "target_shelf_life_days": 10,
+        "storage_type": "chilled",
+        "storage_temperature_c": 2.0,
+        "relative_humidity_percent": 95.0,
+        "moisture_percent": 91.5,
+        "fat_percent": 0.3,
+        "ph": 3.8,
+        "respiration_rate": 8.5,
+        "package_surface_area_m2": 0.05,
+        "package_headspace_volume_cm3": 250.0,
+        "product_mass_kg": 0.25
+    }
+    resp = api_client.post("/api/v1/recommend", json=user_payload)
+    assert resp.status_code == 200
+    data = resp.json()
+
+    # 1. User-supplied parameters reach backend
+    req = data["request"]
+    assert req["commodity"] == "strawberry"
+    assert req["storage_temperature_c"] == 2.0
+    assert req["relative_humidity_percent"] == 95.0
+
+    # 2. Inferred properties preserve user-supplied values
+    props = data["inference_profile"]["properties"]
+    assert props["moisture_percent"]["value"] == 91.5
+    assert props["moisture_percent"]["resolution_level"] == "user_supplied"
+    assert props["fat_percent"]["value"] == 0.3
+    assert props["fat_percent"]["resolution_level"] == "user_supplied"
+    assert props["ph"]["value"] == 3.8
+    assert props["ph"]["resolution_level"] == "user_supplied"
+    assert props["respiration_rate"]["value"] == 8.5
+    assert props["respiration_rate"]["resolution_level"] == "user_supplied"
+
+    # 3. Environmental conditions reach requirement envelope
+    req_env = data["requirement_envelope"]
+    assert req_env["storage_temperature_c"] == 2.0
+    assert req_env["relative_humidity_percent"] == 95.0
+
+
+def test_candidate_counts_and_unknown_separation(api_client, db_session: Session):
+    """
+    Phase 6 Test 5, 8, 9, 10:
+    Verify that candidate counts are mathematically exact,
+    UNKNOWN candidates are never counted as feasible or infeasible,
+    and only exact-physics verified candidates enter the Pareto front.
+    """
+    payload = {
+        "commodity": "salmon",
+        "product_form": "fillet",
+        "ripeness_stage": "fresh",
+        "target_shelf_life_days": 7,
+        "storage_type": "chilled",
+        "storage_temperature_c": 0.5,
+        "relative_humidity_percent": 98.0
+    }
+    resp = api_client.post("/api/v1/recommend", json=payload)
+    assert resp.status_code == 200
+    data = resp.json()
+
+    total = data["total_candidates_evaluated"]
+    feasible = data["feasible_candidates_count"]
+    infeasible = data["infeasible_candidates_count"]
+    unknown = data["unknown_candidates_count"]
+
+    # Candidate count conservation law
+    assert feasible + infeasible + unknown == total
+    assert total > 0
+
+    # Unknown candidates must not be counted as feasible or infeasible
+    assert unknown >= 0
+    if feasible == 0 and infeasible == 0:
+        assert unknown == total
+
+    # Only feasible candidates enter Pareto front
+    pareto_candidates = data["pareto_front"]["candidates"]
+    assert len(pareto_candidates) == data["pareto_front"]["candidate_count"]
+    assert len(pareto_candidates) == feasible
+
+
+def test_material_candidates_sourced_from_actual_db(api_client, db_session: Session):
+    """
+    Phase 6 Test 6:
+    Verify material candidates are retrieved from the actual material database,
+    and all candidate summaries contain database-backed material names and IDs.
+    """
+    payload = {
+        "commodity": "apple",
+        "product_form": "whole",
+        "ripeness_stage": "ripe",
+        "target_shelf_life_days": 30,
+        "storage_type": "chilled"
+    }
+    resp = api_client.post("/api/v1/recommend", json=payload)
+    assert resp.status_code == 200
+    data = resp.json()
+
+    summaries = data["candidate_summaries"]
+    assert len(summaries) == data["total_candidates_evaluated"]
+    assert len(summaries) >= 5
+
+    material_names = [s["material_name"] for s in summaries]
+    # Check diverse materials from the actual M5 packaging material database
+    assert any("LDPE" in name for name in material_names)
+    assert any("HDPE" in name for name in material_names)
+    assert any("BOPP" in name for name in material_names)
+    assert any("EVOH" in name or "PET" in name for name in material_names)
+

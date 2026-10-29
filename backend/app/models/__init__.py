@@ -23,3 +23,4 @@ from app.models.feedback import (
     ComparisonStatus,
     ModelUpdateStatus,
 )
+from app.models.user import User

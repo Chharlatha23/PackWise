@@ -121,8 +121,10 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({
                         {c.observed_value !== undefined && (
                           <span>Observed: {c.observed_value} {c.unit}</span>
                         )}
-                        {c.discrepancy_residual !== undefined && (
-                          <span className="font-semibold text-slate-900">Residual: {c.discrepancy_residual > 0 ? `+${c.discrepancy_residual.toFixed(2)}` : c.discrepancy_residual.toFixed(2)} {c.unit}</span>
+                        {c.discrepancy_residual != null && (
+                          <span className="font-semibold text-slate-900">
+                            Residual: {c.discrepancy_residual > 0 ? `+${Number(c.discrepancy_residual).toFixed(2)}` : Number(c.discrepancy_residual).toFixed(2)} {c.unit}
+                          </span>
                         )}
                       </div>
                     </div>

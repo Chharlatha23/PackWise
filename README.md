@@ -63,13 +63,21 @@ The system operates strictly according to the frozen scientific hierarchy:
 - **Empirical Feedback (`FeedbackService` & `FeedbackEngine`):** Ingestion of observed trial measurements (`POST /api/v1/feedback`), predicted vs. observed residual comparisons, and structured `model_update_candidate` creation. **Zero automatic retraining occurs**, preserving scientific reproducibility.
 
 ### 2. Frontend User Interface
-- **Stack:** Vite, React, TypeScript, Tailwind CSS.
-- **Request Form:** Interactive form with commodity presets (Strawberry, Apple, Salmon) and search tier selection (M9, M10, M11).
-- **Recommendation Dashboard:** Displays inferred food properties with epistemic status, calculated scientific requirements, KPI summaries, and active solver metadata.
-- **Pareto Candidate Cards:** Shows interval-preserving objective ranges, evaluation profiles, and trade-off summaries.
-- **Constraint Audit Modal:** Explains feasibility states, constraint thresholds, counterfactual boundaries, and literature citations.
-- **Empirical Feedback Modal:** Ingests observed trial measurements and displays immediate comparison residuals and containment statuses.
-- **Trial & Model Audit Ledger:** Dashboard tab for reviewing recorded empirical trials and discrepancies flagged for expert review.
+- **Stack:** Vite, React 19, TypeScript, Vanilla CSS design system with Lucide icons.
+- **Persistent Collapsible Navigation:** Clean, modern sidebar (collapses to icons on desktop, slides out as drawer on mobile) organizing features into three logical tiers:
+  - **WORKSPACE:**
+    - **Overview:** System topology status, database counts (commodities, films, barrier observations, traceable records), active solver tier status, and quick workflow launch cards.
+    - **Recommendation Engine:** 4-step guided inverse-design wizard (*Commodity Profile* ➔ *Storage & Logistics* ➔ *Scientific Properties* ➔ *Package Geometry & Solver Tier*) with quick commodity presets (Strawberry, Apple, Salmon) and clear epistemic uncertainty indicators.
+    - **Package Comparison:** Dedicated side-by-side material property comparison matrix evaluating thickness, $OTR$, $CO_2TR$, and $WVTR$ across canonical films.
+    - **What-If Analysis:** Parameter stress-testing suite evaluating temperature abuse, relative humidity shifts, and logistics transit duration against the live backend scientific engine.
+  - **VALIDATION & EVIDENCE:**
+    - **Evidence Library:** Searchable scientific catalog of canonical records, data sources (USDA, UC Davis, CIRAD/WUR), and experimental barrier measurements.
+    - **Trial Feedback & Audit:** Empirical trial observation ledger with predicted vs. observed residual tracking and structured model update candidate submission for human review (strict M12 feedback-loop governance with no automated retraining).
+    - **Model Performance:** Detailed architectural audit page clarifying M9 (Deterministic Baseline), M10 (Adaptive Heuristic), and M11 (Surrogate-Assisted Search) with the mandatory exact-physics validation gateway.
+  - **SYSTEM:**
+    - **Settings:** Environment configuration, database topology details (MySQL user accounts + SQLite scientific knowledge base), and OAuth security auditing.
+- **Top Header Bar:** Subtle backend API status indicator (`API Connected` / `Disconnected`), user profile avatar, authenticated email badge, and secure sign-out.
+- **Recommendation Results View:** FEASIBLE / INFEASIBLE / UNKNOWN status badges, candidate packaging materials, interval-preserving objective ranges, barrier properties, explainability counterfactuals, and non-dominated Pareto front candidates verified exclusively through exact physics.
 
 ---
 
@@ -97,8 +105,51 @@ The system operates strictly according to the frozen scientific hierarchy:
 | **Backend Core** | Python 3.12+, FastAPI, Pydantic v2, SQLAlchemy 2.0 |
 | **Scientific & ML Libraries** | NumPy, SciPy, scikit-learn |
 | **Database** | PostgreSQL (schema & migrations) / SQLite (local fallback) |
-| **Testing** | pytest (490 passed in backend/tests/, 494 passed across all suites; 0 failures), httpx |
+| **Testing** | pytest (503 passed in backend/tests/; 0 failures, 70 warnings), httpx |
 | **Frontend UI** | Vite, React 19, TypeScript, Tailwind CSS |
+| **Authentication** | Google OAuth 2.0 (Authorization Code + PKCE/CSRF state), Authlib, python-jose (JWT) |
+
+---
+
+## Web Application Routes & Authentication
+
+### 1. Route Structure
+- **`/` (Landing Page):** Minimal, high-aesthetic presentation of PackWise adhering to warm brown (`#4A3B32`) and cream (`#FDFBF7`) palette. Features hero copy (*"Plan better food packaging with AI"*), responsive two-column layout, and photograph of eco-friendly kraft paper packaging.
+- **`/login` (Login Page):** Dedicated sign-in portal with PackWise branding, "Continue with Google" OAuth initiation, error alert handling, and return navigation.
+- **`/dashboard` (Protected Dashboard):** Unauthenticated users attempting to access the dashboard or inverse-design recommendation engine are automatically redirected to `/login`. Authenticated users display profile avatar, email, and one-click Sign Out.
+
+### 2. Google OAuth 2.0 Setup
+
+PackWise uses an Authorization Code Flow with backend CSRF `state` validation and signed JWT access tokens.
+
+#### Environment Variables (`.env`)
+Configure the following in the repository root `.env` (refer to `.env.example`):
+```env
+# Frontend & Origins
+FRONTEND_URL=http://localhost:5173
+ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000,http://127.0.0.1:3000
+
+# Google OAuth 2.0 Credentials (Backend Only — Never expose to frontend or git)
+GOOGLE_CLIENT_ID=your_google_client_id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_REDIRECT_URI=http://localhost:8000/api/v1/auth/google/callback
+
+# JWT Token Secret
+AUTH_SECRET_KEY=generate_a_secure_random_secret_key_here
+```
+
+#### Google Cloud Console Configuration
+1. Go to **Google Cloud Console** > **APIs & Services** > **Credentials**.
+2. Create an **OAuth 2.0 Client ID** (Application type: *Web application*).
+3. Under **Authorized JavaScript origins**, add:
+   - `http://localhost:5173`
+   - `http://127.0.0.1:5173`
+   - `http://localhost:8000`
+4. Under **Authorized redirect URIs**, add:
+   - `http://localhost:8000/api/v1/auth/google/callback`
+5. Copy the generated **Client ID** and **Client Secret** into your `.env` file.
+
+> **Note on Testing:** The automated backend test suite validates OAuth initiation, state generation/verification, mock token exchange, user creation, session expiration, and route protection (7 dedicated tests in `backend/tests/test_auth.py`). Live Google authentication requires valid Google Cloud credentials in your local `.env`.
 
 ---
 
@@ -119,7 +170,7 @@ pip install "psycopg[binary]"
 
 Initialize local database:
 ```bash
-python -c "from app.core.database import engine, Base, SessionLocal; from app.ingestion.pipeline import DataIngestionPipeline; from app.models.feedback import PackagingFeedbackRecord, ModelUpdateCandidate; Base.metadata.create_all(bind=engine); db = SessionLocal(); pipeline = DataIngestionPipeline(db); pipeline.run(); print('DB Ready!')"
+python -c "from app.core.database import engine, Base, SessionLocal; from app.ingestion.pipeline import DataIngestionPipeline; from app.models.feedback import PackagingFeedbackRecord, ModelUpdateCandidate; from app.models.user import User; Base.metadata.create_all(bind=engine); db = SessionLocal(); pipeline = DataIngestionPipeline(db); pipeline.run(); print('DB Ready!')"
 ```
 
 Run FastAPI server:
@@ -133,6 +184,7 @@ uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 Run full test suite:
 ```bash
 pytest backend/tests/ -v
+# Output: 503 passed, 70 warnings in ~36.05s
 ```
 
 ### 2. Frontend Setup
@@ -162,3 +214,4 @@ Evidence datasets are cataloged in `data/` and `docs/`:
 - **USDA Handbook 66 & UC Davis Produce Facts:** Postharvest respiration rates and gas tolerances.
 - **ComBase:** Microbial proliferation kinetics.
 - **CIRAD/WUR & Manufacturer TDS:** Packaging film barrier properties ($OTR$, $CO_2TR$, $WVTR$).
+
